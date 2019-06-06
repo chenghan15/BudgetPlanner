@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.cheng.budgetplanner.R;
 import com.cheng.budgetplanner.adapter.MainPageFragmentAdapter;
+import com.cheng.budgetplanner.fragment.DetailFragment;
 import com.cheng.budgetplanner.utils.Constants;
 import com.google.gson.Gson;
 
@@ -58,7 +59,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         note.getPayinfo();
 
 
+        mFragmentManager = getSupportFragmentManager();
+        mainPageFragmentAdapter =new MainPageFragmentAdapter(mFragmentManager);
+        mainPageFragmentAdapter.addFragment(new DetailFragment(),"Detail");
 
+        viewPager.setAdapter(mainPageFragmentAdapter);
         //初始化TabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Detail"));
         tabLayout.addTab(tabLayout.newTab().setText("Chart"));
@@ -81,6 +86,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * @param index
      * @return
      */
+    private FragmentTransaction obtainFragmentTransaction(int index) {
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        // 设置切换动画
+        if (index > this.index) {
+            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left);
+        } else {
+            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right);
+        }
+        return ft;
+    }
 
     /**
      * 监听Drawer
