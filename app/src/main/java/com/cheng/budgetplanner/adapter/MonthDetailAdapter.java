@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.cheng.budgetplanner.R;
 import com.cheng.budgetplanner.activity.EditBillActivity;
-//import com.cheng.budgetplanner.db.LocalDB;
+
 import com.cheng.budgetplanner.bean.BillBean;
 import com.cheng.budgetplanner.bean.MonthDetailBean;
 import com.cheng.budgetplanner.stickyheader.StickyHeaderGridAdapter;
@@ -114,10 +114,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-//                                LocalDB.getInstance().getDBOperation().deleteBill(mDatas.get(section).getList().get(offset).get_Id());
 
-                                mDatas.get(section).getList().remove(offset);
-                                notifySectionItemRemoved(section, offset);
                             }
                         })
                         .show();

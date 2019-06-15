@@ -333,7 +333,6 @@ public class AddBillActivity extends BaseActivity {
 
                 ArrayList<BillBean> bList = new ArrayList<BillBean>();
                 bList.add(newBill);
-//                LocalDB.getInstance().getDBOperation().addBills(bList);
 
 
                 if(jsonStr != "null"){
