@@ -2,7 +2,7 @@ package com.cheng.budgetplanner.bean;
 
 import java.util.List;
 
-public class MonthChartBean extends BaseBean {
+public class MonthChartBean extends BaseBean{
     float totalOut;    //expenses
     float totalIn;    //income
     String l_totalOut;  //上月expenses

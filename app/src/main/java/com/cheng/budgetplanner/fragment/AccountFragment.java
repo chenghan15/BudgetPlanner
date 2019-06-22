@@ -7,22 +7,24 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import butterknife.OnClick;
 import com.bigkoo.pickerview.TimePickerView;
 import com.cheng.budgetplanner.R;
+import com.cheng.budgetplanner.db.LocalDB;
 import com.cheng.budgetplanner.adapter.AccountCardAdapter;
 import com.cheng.budgetplanner.bean.BillBean;
 import com.cheng.budgetplanner.bean.MonthAccountBean;
-
 import com.cheng.budgetplanner.utils.BillUtils;
 import com.cheng.budgetplanner.utils.Constants;
 import com.cheng.budgetplanner.utils.DateUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
+import com.google.gson.Gson;
 
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
@@ -102,9 +104,9 @@ public class AccountFragment extends BaseFragment {
         dataMonth.setText(setMonth);
 
 
-//        List<BillBean> bBills = LocalDB.getInstance().getDBOperation().getAllBills(Integer.valueOf(year), Integer.valueOf(month));
+        List<BillBean> bBills = LocalDB.getInstance().getDBOperation().getAllBills(Integer.valueOf(year), Integer.valueOf(month));
 
-//        monthAccountBean = BillUtils.packageAccountList(bBills);
+        monthAccountBean = BillUtils.packageAccountList(bBills);
 
         tOutcome.setText("" + monthAccountBean.getTotalOut());
         tIncome.setText("" + monthAccountBean.getTotalIn());
@@ -113,7 +115,7 @@ public class AccountFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick({R.id.layout_data, R.id.top_ll_out})
+    @OnClick({R.id.layout_data,R.id.top_ll_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_data:
@@ -121,8 +123,8 @@ public class AccountFragment extends BaseFragment {
                 new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {//选中事件回调
-                        setYear= DateUtils.date2Str(date, "yyyy");
-                        setMonth= DateUtils.date2Str(date, "MM");
+                        setYear=DateUtils.date2Str(date, "yyyy");
+                        setMonth=DateUtils.date2Str(date, "MM");
                         setAcountData(Constants.currentUserId,setYear,setMonth);
                     }
                 }).setRangDate(null, Calendar.getInstance())

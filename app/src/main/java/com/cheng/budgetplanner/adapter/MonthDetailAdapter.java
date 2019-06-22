@@ -10,24 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.bumptech.glide.Glide;
+import com.cheng.budgetplanner.db.LocalDB;
 import com.cheng.budgetplanner.R;
 import com.cheng.budgetplanner.activity.EditBillActivity;
-
-import com.cheng.budgetplanner.bean.BillBean;
-import com.cheng.budgetplanner.bean.MonthDetailBean;
+import com.cheng.budgetplanner.bean.*;
 import com.cheng.budgetplanner.stickyheader.StickyHeaderGridAdapter;
 import com.cheng.budgetplanner.utils.DateUtils;
 import com.cheng.budgetplanner.view.SwipeMenuView;
 
 import java.util.List;
 
+import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_HMS_CN;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_YMDHMS;
+import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_YMD_CN;
 
 /**
  * 悬浮头部项
@@ -114,7 +111,10 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
+                                LocalDB.getInstance().getDBOperation().deleteBill(mDatas.get(section).getList().get(offset).get_Id());
 
+                                mDatas.get(section).getList().remove(offset);
+                                notifySectionItemRemoved(section, offset);
                             }
                         })
                         .show();

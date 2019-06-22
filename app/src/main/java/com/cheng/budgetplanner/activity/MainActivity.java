@@ -15,6 +15,8 @@ import android.view.View;
 
 import com.cheng.budgetplanner.R;
 import com.cheng.budgetplanner.adapter.MainPageFragmentAdapter;
+import com.cheng.budgetplanner.fragment.AccountFragment;
+import com.cheng.budgetplanner.fragment.ChartFragment;
 import com.cheng.budgetplanner.fragment.DetailFragment;
 import com.cheng.budgetplanner.utils.Constants;
 import com.google.gson.Gson;
@@ -28,6 +30,8 @@ import  com.cheng.budgetplanner.bean.NoteBean;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    @BindView(R.id.toolbar)
+    android.support.v7.widget.Toolbar toolbar;
     @BindView(R.id.tablayout)
     TabLayout tabLayout;
     @BindView(R.id.main_viewpager)
@@ -37,6 +41,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    private View drawerHeader;
 //    private TextView drawerTvAccount, drawerTvMail;
 
     // Tab
@@ -59,11 +64,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         note.getPayinfo();
 
 
+        //初始化ViewPager
         mFragmentManager = getSupportFragmentManager();
         mainPageFragmentAdapter =new MainPageFragmentAdapter(mFragmentManager);
         mainPageFragmentAdapter.addFragment(new DetailFragment(),"Detail");
+        mainPageFragmentAdapter.addFragment(new ChartFragment(),"Chart");
+        mainPageFragmentAdapter.addFragment(new AccountFragment(),"Card");
 
         viewPager.setAdapter(mainPageFragmentAdapter);
+
         //初始化TabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Detail"));
         tabLayout.addTab(tabLayout.newTab().setText("Chart"));
@@ -71,6 +80,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         tabLayout.setupWithViewPager(viewPager);
 
         //初始化Toolbar
+        toolbar.setTitle("BudgetPlanner");
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        drawerHeader = navigationView.inflateHeaderView(R.layout.drawer_header);
 
         //设置头部账户
         setDrawerHeaderAccount();
@@ -102,6 +119,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     @Override
     public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**
@@ -147,6 +170,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+//        if (id == R.id.nav_setting) {
+//
+//        } else
+            if (id == R.id.nav_about){
+            startActivity(new Intent(MainActivity.this,AboutActivity.class));
+        }
+//            else if (id == R.id.nav_share) {
+//
+//        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

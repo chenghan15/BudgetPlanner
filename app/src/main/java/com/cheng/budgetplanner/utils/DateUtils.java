@@ -3,6 +3,7 @@ package com.cheng.budgetplanner.utils;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -208,7 +209,7 @@ public class DateUtils {
     }
     public static String long2Str(long mseconds ,String format) {
         SimpleDateFormat sdf= new SimpleDateFormat(format);
-        Date date = new Date(mseconds);
+        java.util.Date date = new Date(mseconds);
         return sdf.format(date);
     }
     public static Calendar str2Calendar(String str) {

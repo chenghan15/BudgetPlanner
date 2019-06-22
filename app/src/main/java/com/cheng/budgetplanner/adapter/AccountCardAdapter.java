@@ -17,7 +17,7 @@ import java.util.List;
 
 
 public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.ViewHolder>{
- 
+
     private Context mContext;
     private LayoutInflater mInflater;
     private List<MonthAccountBean.PayTypeListBean> mDatas;

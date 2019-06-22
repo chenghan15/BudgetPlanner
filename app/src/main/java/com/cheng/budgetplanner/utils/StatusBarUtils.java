@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import com.cheng.budgetplanner.R;
 
 
+
 public class StatusBarUtils {
 
     public static final int DEFAULT_STATUS_BAR_ALPHA = 50;//透明度  0-255 0透明

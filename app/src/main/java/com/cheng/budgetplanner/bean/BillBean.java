@@ -1,6 +1,6 @@
 package com.cheng.budgetplanner.bean;
 
-public class BillBean extends BaseBean {
+public class BillBean extends BaseBean{
 
     /**
      * id : 72

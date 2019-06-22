@@ -1,8 +1,13 @@
 package com.cheng.budgetplanner.activity;
 
 import android.content.Intent;
-
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.provider.SyncStateContract;
+import android.view.Window;
+import android.view.WindowManager;
 import com.cheng.budgetplanner.R;
+import com.cheng.budgetplanner.utils.Constants;
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
@@ -47,7 +52,7 @@ public class SplashActivity extends AwesomeSplash {
 
         //transit to another activity here
         //or do whatever you want
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this,MainActivity.class));
         finish();
     }
 }

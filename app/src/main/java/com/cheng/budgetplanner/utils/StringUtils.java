@@ -3,7 +3,7 @@ package com.cheng.budgetplanner.utils;
 import java.util.Random;
 
 
-public class  StringUtils {
+public class StringUtils {
 
     /**
      * 验证邮箱的正则表达式

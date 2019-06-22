@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import static android.support.v7.widget.RecyclerView.NO_POSITION;
 
 
+
 @SuppressWarnings({"unused", "WeakerAccess"})
 public abstract class StickyHeaderGridAdapter extends RecyclerView.Adapter<StickyHeaderGridAdapter.ViewHolder> {
    public static final String TAG = "StickyHeaderGridAdapter";

@@ -2,7 +2,7 @@ package com.cheng.budgetplanner.bean;
 
 import java.util.List;
 
-public class NoteBean extends BaseBean {
+public class NoteBean extends BaseBean{
 
     private List<SortlistBean> outSortlis;
     private List<SortlistBean> inSortlis;

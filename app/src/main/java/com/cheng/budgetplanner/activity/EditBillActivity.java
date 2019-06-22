@@ -15,19 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.cheng.budgetplanner.db.LocalDB;
 import com.cheng.budgetplanner.R;
 import com.cheng.budgetplanner.adapter.BookNoteAdapter;
 import com.cheng.budgetplanner.adapter.MonthAccountAdapter;
 import com.cheng.budgetplanner.bean.NoteBean;
-
 import com.cheng.budgetplanner.utils.Constants;
 import com.cheng.budgetplanner.utils.DateUtils;
 import com.google.gson.Gson;
@@ -38,12 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
-import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
-import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
-import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_YMD;
+import static com.cheng.budgetplanner.utils.DateUtils.*;
 
 /**
  * 修改账单
@@ -136,7 +127,7 @@ public class EditBillActivity extends BaseActivity {
         if (bundle==null)
             return;
         //设置账单日期
-        days= DateUtils.long2Str(bundle.getLong("date"),FORMAT_YMD);
+        days=DateUtils.long2Str(bundle.getLong("date"),FORMAT_YMD);
         dateTv.setText(days);
         isOutcome=!bundle.getBoolean("income");
         remarkInput=bundle.getString("content");
@@ -391,7 +382,7 @@ public class EditBillActivity extends BaseActivity {
                     break;
                 }
 
-//                LocalDB.getInstance().getDBOperation().updateBill(bundle.getLong("_id"), Float.valueOf(num + dotNum), remarkInput, Constants.currentUserId, lastBean.getId(), lastBean.getSortName(), lastBean.getSortImg(), noteBean.getPayinfo().get(selectedPayinfoIndex).getId(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(), DateUtils.getMillis(crDate), !isOutcome);
+                LocalDB.getInstance().getDBOperation().updateBill(bundle.getLong("_id"), Float.valueOf(num + dotNum), remarkInput, Constants.currentUserId, lastBean.getId(), lastBean.getSortName(), lastBean.getSortImg(), noteBean.getPayinfo().get(selectedPayinfoIndex).getId(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(), DateUtils.getMillis(crDate), !isOutcome);
 
                 Intent intent = new Intent();
 //                intent.putExtra("billJsonStr", "ok");

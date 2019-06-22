@@ -46,7 +46,7 @@ public class BillUtils {
                     preDay = DateUtils.getDay(BillBean.getCrdate());
             } else {
                 //局部变量防止引用冲突
-                List<com.cheng.budgetplanner.bean.BillBean> tmpList = new ArrayList<>();
+                List<BillBean> tmpList = new ArrayList<>();
                 tmpList.addAll(beanList);
                 MonthDetailBean.DaylistBean tmpDay = new MonthDetailBean.DaylistBean();
                 tmpDay.setList(tmpList);
@@ -104,7 +104,7 @@ public class BillUtils {
 
             //账单分类
             String sort = BillBean.getSortName();
-            List<com.cheng.budgetplanner.bean.BillBean> listBill;
+            List<BillBean> listBill;
             if (BillBean.isIncome()) {
                 if (mapIn.containsKey(sort)) {
                     listBill = mapIn.get(sort);
@@ -179,11 +179,11 @@ public class BillUtils {
             String pay = BillBean.getPayName();
 
             if (mapAccount.containsKey(pay)) {
-                List<com.cheng.budgetplanner.bean.BillBean> BillBeans = mapAccount.get(pay);
+                List<BillBean> BillBeans = mapAccount.get(pay);
                 BillBeans.add(BillBean);
                 mapAccount.put(pay, BillBeans);
             } else {
-                List<com.cheng.budgetplanner.bean.BillBean> BillBeans = new ArrayList<>();
+                List<BillBean> BillBeans = new ArrayList<>();
                 BillBeans.add(BillBean);
                 mapAccount.put(pay, BillBeans);
             }

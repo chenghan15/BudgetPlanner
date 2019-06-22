@@ -11,23 +11,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
+import com.cheng.budgetplanner.db.LocalDB;
 import com.cheng.budgetplanner.R;
 import com.cheng.budgetplanner.activity.AddBillActivity;
 import com.cheng.budgetplanner.adapter.MonthDetailAdapter;
 import com.cheng.budgetplanner.bean.BillBean;
 import com.cheng.budgetplanner.bean.MonthDetailBean;
-
 import com.cheng.budgetplanner.stickyheader.StickyHeaderGridLayoutManager;
 import com.cheng.budgetplanner.utils.BillUtils;
 import com.cheng.budgetplanner.utils.Constants;
 import com.cheng.budgetplanner.utils.DateUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.google.gson.Gson;
 
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
@@ -149,11 +151,19 @@ public class DetailFragment extends BaseFragment {
         //请求某年某月数据
 
 
+        List<BillBean> bBills = LocalDB.getInstance().getDBOperation().getAllBills(Integer.valueOf(year), Integer.valueOf(month));
 
+        MonthDetailBean data = BillUtils.packageDetailList(bBills);
+
+        tOutcome.setText(data.getT_outcome());
+        tIncome.setText(data.getT_income());
+        list = data.getDaylist();
+        adapter.setmDatas(list);
+        adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
     }
 
 
-    @OnClick({R.id.float_btn, R.id.layout_data, R.id.top_ll_out})
+    @OnClick({R.id.float_btn, R.id.layout_data,R.id.top_ll_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.float_btn:

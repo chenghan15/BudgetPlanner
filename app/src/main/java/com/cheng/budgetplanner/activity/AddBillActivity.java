@@ -14,23 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.cheng.budgetplanner.R;
 import com.cheng.budgetplanner.adapter.BookNoteAdapter;
 import com.cheng.budgetplanner.adapter.MonthAccountAdapter;
-import com.cheng.budgetplanner.bean.BillBean;
-import com.cheng.budgetplanner.bean.NoteBean;
-
+import com.cheng.budgetplanner.bean.*;
 import com.cheng.budgetplanner.utils.Constants;
 import com.cheng.budgetplanner.utils.DateUtils;
-import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,9 +31,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.google.gson.Gson;
 
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
+
+import com.cheng.budgetplanner.db.LocalDB;
+
 
 
 /**
@@ -118,7 +114,7 @@ public class AddBillActivity extends BaseActivity {
         mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
         mMonth = Integer.parseInt(DateUtils.getCurMonth(FORMAT_M));
         //设置当前 日期
-        days= DateUtils.getCurDateStr("yyyy-MM-dd");
+        days=DateUtils.getCurDateStr("yyyy-MM-dd");
         dateTv.setText(days);
 
     }
@@ -192,8 +188,14 @@ public class AddBillActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-
-
+                try {
+                    for (int i = 0; i < viewList.size(); i++) {
+                        icons[i].setImageResource(R.drawable.icon_banner_point2);
+                    }
+                    icons[position].setImageResource(R.drawable.icon_banner_point1);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -206,7 +208,22 @@ public class AddBillActivity extends BaseActivity {
     private List<View> viewList;
     private ImageView[] icons;
     private void initIcon() {
-
+        icons = new ImageView[viewList.size()];
+        layoutIcon.removeAllViews();
+        for (int i = 0; i < icons.length; i++) {
+            icons[i] = new ImageView(this);
+            icons[i].setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            icons[i].setImageResource(R.drawable.icon_banner_point2);
+            if(viewpagerItem.getCurrentItem() == i){
+                icons[i].setImageResource(R.drawable.icon_banner_point1);
+            }
+            icons[i].setPadding(5, 0, 5, 0);
+            icons[i].setAdjustViewBounds(true);
+            layoutIcon.addView(icons[i]);
+        }
+        if (sortPage != -1)
+            viewpagerItem.setCurrentItem(sortPage);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -333,6 +350,7 @@ public class AddBillActivity extends BaseActivity {
 
                 ArrayList<BillBean> bList = new ArrayList<BillBean>();
                 bList.add(newBill);
+                LocalDB.getInstance().getDBOperation().addBills(bList);
 
 
                 if(jsonStr != "null"){

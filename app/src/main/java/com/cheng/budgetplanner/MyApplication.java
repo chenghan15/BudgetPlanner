@@ -3,7 +3,7 @@ package com.cheng.budgetplanner;
 import android.app.Application;
 import android.content.Context;
 
-
+import com.cheng.budgetplanner.db.LocalDB;
 
 public class MyApplication extends Application {
 
@@ -15,6 +15,6 @@ public class MyApplication extends Application {
         super.onCreate();
         application = this;
         context = getApplicationContext();
-
+        LocalDB.getInstance().initDB(context);
     }
 }

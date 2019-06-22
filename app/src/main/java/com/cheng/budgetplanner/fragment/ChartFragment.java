@@ -7,21 +7,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.cheng.budgetplanner.R;
+import com.cheng.budgetplanner.db.LocalDB;
 import com.cheng.budgetplanner.adapter.MonthChartAdapter;
 import com.cheng.budgetplanner.bean.BillBean;
 import com.cheng.budgetplanner.bean.MonthChartBean;
-
-import com.cheng.budgetplanner.utils.BillUtils;
-import com.cheng.budgetplanner.utils.Constants;
-import com.cheng.budgetplanner.utils.DateUtils;
-import com.cheng.budgetplanner.utils.PieChartUtils;
+import com.cheng.budgetplanner.utils.*;
 import com.cheng.budgetplanner.view.CircleImageView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -36,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.google.gson.Gson;
 
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
@@ -148,7 +143,9 @@ public class ChartFragment extends BaseFragment
         dataYear.setText(setYear + " Y");
         dataMonth.setText(setMonth);
 
+        List<BillBean> bBills = LocalDB.getInstance().getDBOperation().getAllBills(Integer.valueOf(year), Integer.valueOf(month));
 
+        monthChartBean = BillUtils.packageChartList(bBills);
 
         setReportData();
     }

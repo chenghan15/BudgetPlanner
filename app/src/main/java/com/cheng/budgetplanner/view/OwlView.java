@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.LinearInterpolator;
-
 import com.cheng.budgetplanner.R;
 
 import java.math.BigDecimal;
@@ -78,9 +77,9 @@ public class OwlView extends View {
         });
 
 
-        bm_owl = BitmapFactory.decodeResource(getResources(), R.mipmap.owl_login);
-        bm_owl_arm_left = BitmapFactory.decodeResource(getResources(), R.mipmap.owl_login_arm_left);
-        bm_owl_arm_right = BitmapFactory.decodeResource(getResources(), R.mipmap.owl_login_arm_right);
+        bm_owl = BitmapFactory.decodeResource(getResources(),R.mipmap.owl_login);
+        bm_owl_arm_left = BitmapFactory.decodeResource(getResources(),R.mipmap.owl_login_arm_left);
+        bm_owl_arm_right = BitmapFactory.decodeResource(getResources(),R.mipmap.owl_login_arm_right);
 
         bm_owl = compressBitmap(bm_owl,dip2px(115),dip2px(107),false);
         bm_owl_arm_left = compressBitmap(bm_owl_arm_left,dip2px(40),dip2px(65),true);

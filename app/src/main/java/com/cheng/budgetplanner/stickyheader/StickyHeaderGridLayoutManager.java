@@ -19,6 +19,7 @@ import static com.cheng.budgetplanner.stickyheader.StickyHeaderGridAdapter.TYPE_
 import static com.cheng.budgetplanner.stickyheader.StickyHeaderGridAdapter.TYPE_ITEM;
 
 
+
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class StickyHeaderGridLayoutManager extends RecyclerView.LayoutManager implements RecyclerView.SmoothScroller.ScrollVectorProvider {
    public static final String TAG = "StickyLayoutManager";
