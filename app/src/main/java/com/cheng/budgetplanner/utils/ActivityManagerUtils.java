@@ -8,13 +8,13 @@ import java.util.List;
 
 public class ActivityManagerUtils {
 	
-	/** 记录处于前台的Activity */
+	/** foreground Activity */
 	public static Activity mForegroundActivity = null;
-	/** 记录所有活动的Activity */
+	/** all Activity */
 	public static final List<Activity> mActivities = new LinkedList<Activity>();
 
 	
-	/** 获取当前处于栈顶的activity，无论其是否处于前台 */
+	/** stack top activity */
 	public static Activity getCurrentActivity() {
 		List<Activity> copy;
 		synchronized (mActivities) {
@@ -26,17 +26,17 @@ public class ActivityManagerUtils {
 		return null;
 	}
 
-	/** 是否有启动的Activity */
+
 	public static boolean hasActivity() {
 		return mActivities.size() > 0;
 	}
 
-	/** 获取当前处于前台的activity */
+
 	public static Activity getForegroundActivity() {
 		return mForegroundActivity;
 	}
 
-	/** 关闭所有Activity，除了参数传递的Activity */
+	/** close all Activity，except except Activity */
 	public static void finishAll(Class except) {
 		List<Activity> copy;
 		synchronized (mActivities) {
@@ -48,7 +48,7 @@ public class ActivityManagerUtils {
 		}
 	}
 
-	/** 关闭所有Activity */
+	/** close all Activity */
 	public static void finishAll() {
 		List<Activity> copy;
 		synchronized (mActivities) {

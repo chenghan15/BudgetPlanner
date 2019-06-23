@@ -35,7 +35,7 @@ import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
 
 /**
- * 记账本--Detail
+ *  Detail
  */
 public class DetailFragment extends BaseFragment {
 
@@ -78,11 +78,10 @@ public class DetailFragment extends BaseFragment {
 
         dataYear.setText(setYear+" Y");
         dataMonth.setText(setMonth);
-        //改变加载显示的颜色
+        //setting scheme color
         swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
-        //设置向下拉多少出现刷新
+        //setting trigger postion pixel for sync
         swipe.setDistanceToTriggerSync(200);
-        //设置刷新出现的位置
         swipe.setProgressViewEndTarget(false, 200);
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -105,7 +104,7 @@ public class DetailFragment extends BaseFragment {
         rvList.setLayoutManager(mLayoutManager);
         adapter = new MonthDetailAdapter(mContext, list);
         rvList.setAdapter(adapter);
-        //list的滑动监听
+        //list right slide listener
         rvList.setOnTouchListener(new View.OnTouchListener() {
             private float lastX;
             private float lastY;
@@ -120,7 +119,7 @@ public class DetailFragment extends BaseFragment {
                         float x = event.getX();
                         float y = event.getY();
                         boolean isUp=lastY- y>2;
-                        //一次down，只变化一次，防止一次滑动时抖动下，造成某一个的向下时,y比lastY小
+                        //once down，change once，anti shake
                         if(isUp){
                             floatBtn.setVisibility(View.GONE);
                         }
@@ -136,7 +135,7 @@ public class DetailFragment extends BaseFragment {
             }
 
         });
-        //请求当月数据
+        //setting current month date
         setBillData(Constants.currentUserId,setYear,setMonth);
     }
 
@@ -144,11 +143,11 @@ public class DetailFragment extends BaseFragment {
     private void setBillData(final int userid, String year, String month) {
         dataYear.setText(year+" Y");
         dataMonth.setText(month);
-        //请求数据前清空数据
+        //clear data
         adapter.clear();
         tOutcome.setText("0.00");
         tIncome.setText("0.00");
-        //请求某年某月数据
+        //query date by year and month
 
 
         List<BillBean> bBills = LocalDB.getInstance().getDBOperation().getAllBills(Integer.valueOf(year), Integer.valueOf(month));
@@ -159,7 +158,7 @@ public class DetailFragment extends BaseFragment {
         tIncome.setText(data.getT_income());
         list = data.getDaylist();
         adapter.setmDatas(list);
-        adapter.notifyAllSectionsDataSetChanged();//需调用此方法刷新
+        adapter.notifyAllSectionsDataSetChanged();//notify changes
     }
 
 
@@ -167,18 +166,14 @@ public class DetailFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.float_btn:
-//                if(Constants.currentUserId==0) {
-//                    Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_SHORT).show();
-//                }else {
                     Intent intent = new Intent(getContext(), AddBillActivity.class);
                     startActivityForResult(intent, 0);
-//                }
                 break;
             case R.id.layout_data:
-                //时间选择器
+                //time picker
                 new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
                     @Override
-                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                    public void onTimeSelect(Date date, View v) {//call back
                         setYear=DateUtils.date2Str(date, "yyyy");
                         setMonth=DateUtils.date2Str(date, "MM");
                         setBillData(Constants.currentUserId,setYear,setMonth);
@@ -194,7 +189,7 @@ public class DetailFragment extends BaseFragment {
         }
     }
 
-    //AdBillActivity返回值
+    //Add Bill Activity  result
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

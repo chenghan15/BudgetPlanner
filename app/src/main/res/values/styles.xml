@@ -13,11 +13,11 @@
     </style>
 
     <style name="toolbar_theme" parent="@style/ThemeOverlay.AppCompat.Light">
-        <!--这个也正确,用这个吧-->
+
         <item name="colorControlNormal">@android:color/white</item>
     </style>
 
-    <!-- 底部Tab RadioButton样式 -->
+
     <style name="tab_radiobutton_style">
         <item name="android:gravity">bottom|center_horizontal</item>
         <item name="android:textSize">13sp</item>
@@ -30,13 +30,13 @@
     </style>
 
 
-    <!--水平装饰线-->
+
     <style name="horizontal_decoration_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
         <item name="android:background">#999999</item>
     </style>
-    <!--竖直装饰线-->
+
     <style name="vertical_decoration_style">
         <item name="android:layout_width">1px</item>
         <item name="android:layout_height">match_parent</item>

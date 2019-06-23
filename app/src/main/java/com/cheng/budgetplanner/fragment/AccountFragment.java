@@ -30,7 +30,7 @@ import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
 
 /**
- * 记账本--我的账户
+ * my accouts
  */
 public class AccountFragment extends BaseFragment {
 
@@ -70,11 +70,10 @@ public class AccountFragment extends BaseFragment {
 
         dataYear.setText(DateUtils.getCurYear("yyyy Y"));
         dataMonth.setText(DateUtils.date2Str(new Date(), "MM"));
-        //改变加载显示的颜色
+        //setting scheme color
         swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
-        //设置向下拉多少出现刷新
+        //setting trigger postion pixel for sync
         swipe.setDistanceToTriggerSync(200);
-        //设置刷新出现的位置
         swipe.setProgressViewEndTarget(false, 200);
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -93,7 +92,7 @@ public class AccountFragment extends BaseFragment {
         });
         rvList.setAdapter(adapter);
 
-        //请求当月数据
+        //setting current month date
         setAcountData(Constants.currentUserId, setYear, setMonth);
     }
 
@@ -119,10 +118,10 @@ public class AccountFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_data:
-                //时间选择器
+                //time picker
                 new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
                     @Override
-                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                    public void onTimeSelect(Date date, View v) {
                         setYear=DateUtils.date2Str(date, "yyyy");
                         setMonth=DateUtils.date2Str(date, "MM");
                         setAcountData(Constants.currentUserId,setYear,setMonth);

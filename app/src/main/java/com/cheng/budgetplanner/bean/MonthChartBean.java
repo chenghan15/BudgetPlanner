@@ -5,10 +5,10 @@ import java.util.List;
 public class MonthChartBean extends BaseBean{
     float totalOut;    //expenses
     float totalIn;    //income
-    String l_totalOut;  //上月expenses
-    String l_totalIn;  //上月income
-    List<SortTypeList> outSortlist;    //账单分类统计expense
-    List<SortTypeList> inSortlist;    //账单分类统计income
+    String l_totalOut;  //expenses
+    String l_totalIn;  //income
+    List<SortTypeList> outSortlist;    //expense list
+    List<SortTypeList> inSortlist;    //income list
 
     public float getTotalOut() {
         return totalOut;
@@ -60,10 +60,10 @@ public class MonthChartBean extends BaseBean{
 
     public static class SortTypeList {
         private String back_color;
-        private float  money;    //此分类下的当月总收支
-        private String sortName;  //此分类
+        private float  money;    //current type month money
+        private String sortName;  //current type name
         private String sortImg;
-        private List<BillBean> list;  //此分类下的当月账单
+        private List<BillBean> list;  //current type bills
 
         public String getBack_color() {
             return back_color;

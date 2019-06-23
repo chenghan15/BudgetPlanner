@@ -19,10 +19,10 @@
     <color name="text_red">#FF5050</color>
     <color name="red">#ff0000</color>
 
-    <color name="green">#008000</color> <!-- 绿色 -->
-    <color name="darkgreen">#006400</color> <!-- 暗绿色 -->
+    <color name="green">#008000</color> <!-- green -->
+    <color name="darkgreen">#006400</color> <!-- darkgreen -->
 
-    <!--aboutActivity字体颜色-->
+    <!--aboutActivity font colour-->
     <color name="material_grey_100">#fff5f5f5</color>
     <color name="material_grey_300">#ffe0e0e0</color>
     <color name="material_grey_50">#fffafafa</color>

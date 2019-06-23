@@ -41,7 +41,7 @@ import com.cheng.budgetplanner.db.LocalDB;
 
 
 /**
- * 记账本 --- 记一笔
+ * bill
  */
 public class AddBillActivity extends BaseActivity {
 
@@ -63,31 +63,31 @@ public class AddBillActivity extends BaseActivity {
     LinearLayout layoutIcon;
 
     public boolean isOutcome = true;
-    //计算器
+    //Calculate
     private boolean isDot;
     private String num = "0";
     private String dotNum = ".00";
     private final int MAX_NUM = 9999999;
     private final int DOT_NUM = 2;
     private int count = 0;
-    //选择器
+    //
     private OptionsPickerView pvCustomOptions;
     private List<String> cardItem;
     private int selectedPayinfoIndex=0;
-    //viewpager数据
+    //viewpager
     private int page ;
     private boolean isTotalPage;
     private int sortPage = -1;
     private List<NoteBean.SortlistBean> mDatas;
     private List<NoteBean.SortlistBean> tempList;
-    //记录上一次点击后的imageview
+    //
     public NoteBean.SortlistBean lastBean;
     public ImageView lastImg;
 
-    //备注对话框
+    //dialog
     private AlertDialog alertDialog;
 
-    //选择时间
+    //time
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -110,17 +110,17 @@ public class AddBillActivity extends BaseActivity {
         setTitleStatus();
 
 
-        //设置日期选择器初始日期
+        //setting date
         mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
         mMonth = Integer.parseInt(DateUtils.getCurMonth(FORMAT_M));
-        //设置当前 日期
+        //setting current date
         days=DateUtils.getCurDateStr("yyyy-MM-dd");
         dateTv.setText(days);
 
     }
 
     /**
-     * 设置状态
+     * setting status
      */
     private void setTitleStatus() {
 
@@ -147,8 +147,8 @@ public class AddBillActivity extends BaseActivity {
     }
 
     private void initViewPager() {
-        LayoutInflater inflater = this.getLayoutInflater();// 获得一个视图管理器LayoutInflater
-        viewList = new ArrayList<>();// 创建一个View的集合对象
+        LayoutInflater inflater = this.getLayoutInflater();
+        viewList = new ArrayList<>();
         if (mDatas.size() % 10 == 0)
             isTotalPage = true;
         page = (int) Math.ceil(mDatas.size() * 1.0 / 10);
@@ -179,7 +179,7 @@ public class AddBillActivity extends BaseActivity {
 
         viewpagerItem.setAdapter(new MonthAccountAdapter(viewList));
         viewpagerItem.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        viewpagerItem.setOffscreenPageLimit(1);//预加载数据页
+        viewpagerItem.setOffscreenPageLimit(1);
         viewpagerItem.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -245,7 +245,7 @@ public class AddBillActivity extends BaseActivity {
                 isOutcome=true;
                 setTitleStatus();
                 break;
-            case R.id.tb_note_cash://现金
+            case R.id.tb_note_cash://cash
                 pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int option2, int options3, View v) {
@@ -257,7 +257,7 @@ public class AddBillActivity extends BaseActivity {
                 pvCustomOptions.setPicker(cardItem);
                 pvCustomOptions.show();
                 break;
-            case R.id.tb_note_date://日期
+            case R.id.tb_note_date://date
 
                 new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -288,15 +288,15 @@ public class AddBillActivity extends BaseActivity {
                     }
                 },mYear, mMonth, mDay ).show();
                 break;
-            case R.id.tb_note_remark://备注
+            case R.id.tb_note_remark://comments
 
                 final EditText editText = new EditText(AddBillActivity.this);
 
                 editText.setText(remarkInput);
-                //将光标移至文字末尾
+
                 editText.setSelection(remarkInput.length());
 
-                //弹出输入框
+
                 alertDialog=new AlertDialog.Builder(this)
                         .setTitle("Comments")
                         .setView(editText)
@@ -317,13 +317,13 @@ public class AddBillActivity extends BaseActivity {
 
                 alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                     public void onShow(DialogInterface dialog) {
-                        //调用系统输入法
+                        //call inputMethod
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                     }
                 });
                 break;
-            case R.id.tb_calc_num_done://确定
+            case R.id.tb_calc_num_done://confirm
                 final SimpleDateFormat sdf = new SimpleDateFormat(" HH:mm:ss");
                 final String crDate=days+sdf.format(new Date());
                 if ((num+dotNum).equals("0.00")) {
@@ -398,14 +398,14 @@ public class AddBillActivity extends BaseActivity {
                 }
                 moneyTv.setText(num + dotNum);
                 break;
-            case R.id.tb_note_clear://清空
+            case R.id.tb_note_clear://clear
                 num = "0";
                 count = 0;
                 dotNum = ".00";
                 isDot = false;
                 moneyTv.setText("0.00");
                 break;
-            case R.id.tb_calc_num_del://删除
+            case R.id.tb_calc_num_del://delete
                 if (isDot){
                     if (count > 0){
                         dotNum = dotNum.substring(0, dotNum.length() - 1);
@@ -427,7 +427,7 @@ public class AddBillActivity extends BaseActivity {
         }
     }
 
-    //计算金额
+    //calculate money
     private void calcMoney(int money) {
         if (num.equals("0") && money == 0)
             return;

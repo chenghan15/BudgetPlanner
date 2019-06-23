@@ -22,13 +22,10 @@ import com.cheng.budgetplanner.view.SwipeMenuView;
 
 import java.util.List;
 
-import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_HMS_CN;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_YMDHMS;
-import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_YMD_CN;
 
 /**
- * 悬浮头部项
- * 可侧滑编辑、删除
+ * MonthDetailAdapter
  */
 
 public class MonthDetailAdapter extends StickyHeaderGridAdapter {
@@ -97,14 +94,14 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
             holder.item_money.setText("-" + mDatas.get(section).getList().get(position).getCost());
         }
 
-        //监听侧滑删除事件
+        //listen to delete
         holder.item_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final int section = getAdapterPositionSection(holder.getAdapterPosition());
                 final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
 
-                //确认删除
+                //confirm delete
                 new AlertDialog.Builder(mContext).setTitle("Delete this record?")
                         .setNegativeButton("Cancel", null)
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
@@ -120,7 +117,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                         .show();
             }
         });
-        //监听侧滑编辑事件
+        //listen to item click
         holder.item_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +138,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                 ((Activity) mContext).startActivityForResult(intent, 0);
             }
         });
-        //监听单击显示详情事件
+        //listen to item layout click
         holder.item_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

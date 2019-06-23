@@ -33,14 +33,6 @@ public class NoteBean extends BaseBean{
     }
 
     public static class SortlistBean {
-        /**
-         * id : 1
-         * uid : 0
-         * sortName : 偿还费用
-         * sortImg : changhuanfeiyong@2x.png
-         * priority : 0
-         * income : false
-         */
 
         private int id;
         private int uid;
@@ -109,13 +101,7 @@ public class NoteBean extends BaseBean{
     }
 
     public static class PayInfoBean {
-        /**
-         * id : 1
-         * uid : 0
-         * payName : 现金
-         * payImg : cash@2x.png
-         * payNum : null
-         */
+
 
         private int id;
         private int uid;

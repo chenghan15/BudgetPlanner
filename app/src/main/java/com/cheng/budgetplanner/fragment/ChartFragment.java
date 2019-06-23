@@ -36,7 +36,7 @@ import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
 
 /**
- * 记账本--类别Chart
+ * Chart
  */
 public class ChartFragment extends BaseFragment
         implements OnChartValueSelectedListener {
@@ -89,9 +89,9 @@ public class ChartFragment extends BaseFragment
     @BindView(R.id.layout_typedata)
     LinearLayout layoutTypedata;
 
-    private boolean TYPE = true;//默认incometrue
+    private boolean TYPE = true;
     private List<MonthChartBean.SortTypeList> tMoneyBeanList;
-    private String sort_image;//饼状图与之相对应的分类图片地址
+    private String sort_image;
     private String sort_name;
     private String back_color;
 
@@ -115,11 +115,10 @@ public class ChartFragment extends BaseFragment
         PieChartUtils.initPieChart(mChart);
         mChart.setOnChartValueSelectedListener(this);
 
-        //改变加载显示的颜色
+        //setting scheme color
         swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
-        //设置向下拉多少出现刷新
+        //setting trigger postion pixel for sync
         swipe.setDistanceToTriggerSync(200);
-        //设置刷新出现的位置
         swipe.setProgressViewEndTarget(false, 200);
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -134,7 +133,7 @@ public class ChartFragment extends BaseFragment
         adapter = new MonthChartAdapter(getActivity(), null);
         rvList.setAdapter(adapter);
 
-        //请求当月数据
+        //setting current month date
         setChartData(Constants.currentUserId, setYear, setMonth);
     }
 
@@ -185,7 +184,7 @@ public class ChartFragment extends BaseFragment
                 colors.add(Color.parseColor(tMoneyBeanList.get(i).getBack_color()));
             }
             setNoteData(0);
-        } else {//无数据时的显示
+        } else {//no data setting
             layoutTypedata.setVisibility(View.GONE);
             entries.add(new PieEntry(1f));
             colors.add(0xffAAAAAA);
@@ -195,7 +194,7 @@ public class ChartFragment extends BaseFragment
     }
 
     /**
-     * 点击饼状图上区域后相应的数据设置
+     * when chart area clicked
      *
      * @param index
      */
@@ -246,10 +245,10 @@ public class ChartFragment extends BaseFragment
                 setReportData();
                 break;
             case R.id.layout_data:
-                //时间选择器
+                //time picker
                 new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
                     @Override
-                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                    public void onTimeSelect(Date date, View v) {//call back
                         setYear = DateUtils.date2Str(date, "yyyy");
                         setMonth = DateUtils.date2Str(date, "MM");
                         setChartData(Constants.currentUserId, setYear, setMonth);

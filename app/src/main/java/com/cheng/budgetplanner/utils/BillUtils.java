@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 包装账单展示列表工具类
+ *  bill tools class
  */
 public class BillUtils {
 
@@ -24,16 +24,16 @@ public class BillUtils {
         float income = 0;
         float outcome = 0;
 
-        String preDay = "";  //记录前一天的时间
+        String preDay = "";  //pre day
         for (int i = 0; i < list.size(); i++) {
             BillBean BillBean = list.get(i);
-            //计算incomeexpense
+            //calculate income expense
             if (BillBean.isIncome())
                 t_income += BillBean.getCost();
             else
                 t_outcome += BillBean.getCost();
 
-            //判断后一个账单是否于前者为同一天
+
             if (i == 0 || preDay.equals(DateUtils.getDay(BillBean.getCrdate()))) {
 
                 if (BillBean.isIncome())
@@ -45,7 +45,7 @@ public class BillUtils {
                 if (i==0)
                     preDay = DateUtils.getDay(BillBean.getCrdate());
             } else {
-                //局部变量防止引用冲突
+
                 List<BillBean> tmpList = new ArrayList<>();
                 tmpList.addAll(beanList);
                 MonthDetailBean.DaylistBean tmpDay = new MonthDetailBean.DaylistBean();
@@ -54,12 +54,12 @@ public class BillUtils {
                 tmpDay.setTime(preDay);
                 daylist.add(tmpDay);
 
-                //清空前一天的数据
+                //clear data
                 beanList.clear();
                 income = 0;
                 outcome = 0;
 
-                //添加数据
+                //add data
                 if (BillBean.isIncome())
                     income += BillBean.getCost();
                 else
@@ -70,7 +70,7 @@ public class BillUtils {
         }
 
         if (beanList.size() > 0) {
-            //局部变量防止引用冲突
+
             List<BillBean> tmpList = new ArrayList<>();
             tmpList.addAll(beanList);
             MonthDetailBean.DaylistBean tmpDay = new MonthDetailBean.DaylistBean();
@@ -98,11 +98,11 @@ public class BillUtils {
         Map<String, Float> moneyOut = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
             BillBean BillBean = list.get(i);
-            //计算incomeexpense
+            //calculate income and expense
             if (BillBean.isIncome()) t_income += BillBean.getCost();
             else t_outcome += BillBean.getCost();
 
-            //账单分类
+            //bill classes
             String sort = BillBean.getSortName();
             List<BillBean> listBill;
             if (BillBean.isIncome()) {
@@ -132,8 +132,8 @@ public class BillUtils {
             }
         }
 
-        List<MonthChartBean.SortTypeList> outSortlist = new ArrayList<>();    //账单分类统计expense
-        List<MonthChartBean.SortTypeList> inSortlist = new ArrayList<>();    //账单分类统计income
+        List<MonthChartBean.SortTypeList> outSortlist = new ArrayList<>();    // expense
+        List<MonthChartBean.SortTypeList> inSortlist = new ArrayList<>();    // income
 
         for (Map.Entry<String, List<BillBean>> entry : mapOut.entrySet()) {
             MonthChartBean.SortTypeList sortTypeList = new MonthChartBean.SortTypeList();
@@ -172,7 +172,7 @@ public class BillUtils {
         Map<String, Float> mapMoneyOut = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
             BillBean BillBean = list.get(i);
-            //计算incomeexpense
+            //calculate income and expense
             if (BillBean.isIncome()) t_income += BillBean.getCost();
             else t_outcome += BillBean.getCost();
 
@@ -207,8 +207,7 @@ public class BillUtils {
         for (Map.Entry<String, List<BillBean>> entry : mapAccount.entrySet()) {
             MonthAccountBean.PayTypeListBean payTypeListBean = new MonthAccountBean.PayTypeListBean();
             payTypeListBean.setBills(entry.getValue());
-            //先判断当前支付方式是否有输入或expense
-            //因为有可能只有expense或income
+
             if (mapMoneyIn.containsKey(entry.getKey()))
                 payTypeListBean.setIncome(mapMoneyIn.get(entry.getKey()));
             if (mapMoneyOut.containsKey(entry.getKey()))

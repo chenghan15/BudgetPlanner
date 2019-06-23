@@ -57,14 +57,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void initEventAndData() {
 
-        //第一次进入将默认账单分类添加到数据库
+        //obtain the bill note information
         NoteBean note= new Gson().fromJson(Constants.BILL_NOTE, NoteBean.class);
         List<NoteBean.SortlistBean> sorts=note.getOutSortlis();
         sorts.addAll(note.getInSortlis());
         note.getPayinfo();
 
 
-        //初始化ViewPager
+        //init ViewPager
         mFragmentManager = getSupportFragmentManager();
         mainPageFragmentAdapter =new MainPageFragmentAdapter(mFragmentManager);
         mainPageFragmentAdapter.addFragment(new DetailFragment(),"Detail");
@@ -73,13 +73,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         viewPager.setAdapter(mainPageFragmentAdapter);
 
-        //初始化TabLayout
+        //init TabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Detail"));
         tabLayout.addTab(tabLayout.newTab().setText("Chart"));
         tabLayout.addTab(tabLayout.newTab().setText("Card"));
         tabLayout.setupWithViewPager(viewPager);
 
-        //初始化Toolbar
+        //init Toolbar
         toolbar.setTitle("BudgetPlanner");
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -89,23 +89,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         drawerHeader = navigationView.inflateHeaderView(R.layout.drawer_header);
 
-        //设置头部账户
+        //setting drawer
         setDrawerHeaderAccount();
-        //监听侧滑菜单
+
+        //listen navigation
         navigationView.setNavigationItemSelectedListener(this);
 
     }
 
 
     /**
-     * 获取一个带动画的FragmentTransaction
+     * Fragment Transaction
      *
      * @param index
      * @return
      */
     private FragmentTransaction obtainFragmentTransaction(int index) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
-        // 设置切换动画
+        // shift animations
         if (index > this.index) {
             ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left);
         } else {
@@ -115,7 +116,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     /**
-     * 监听Drawer
+     * listen Drawer
      */
     @Override
     public void onBackPressed() {
@@ -128,7 +129,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     /**
-     * 监听点击事件 R.id.drawer_tv_name,R.id.drawer_tv_mail
+     * listen R.id.drawer_tv_name,R.id.drawer_tv_mail
      *
      * @param view
      */
@@ -142,7 +143,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     /**
-     * 监听Activity返回值
+     * listen Activity return value
      *
      * @param requestCode
      * @param resultCode
@@ -157,14 +158,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     /**
-     * 设置DrawerHeader的用户信息
+     * setting DrawerHeader info
      */
     public void setDrawerHeaderAccount() {
 
     }
 
     /**
-     * 监听侧滑菜单事件
+     * listen navigation item
      * @param item
      * @return
      */

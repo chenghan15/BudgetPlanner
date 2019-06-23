@@ -2,30 +2,20 @@ package com.cheng.budgetplanner.bean;
 
 public class BillBean extends BaseBean{
 
-    /**
-     * id : 72
-     * cost : 100.0
-     * content : test
-     * userid : 1
-     * payid : 0
-     * sortid : 1
-     * crdate : 1512379901000
-     * income : false
-     * sort : {"id":72,"uid":0,"sortName":"偿还费用","sortImg":"changhuanfeiyong@2x.png","priority":0,"income":false}
-     */
+
 
     private long _id;
     private int id;
     private float cost;
     private String content;
     private int userid;
-    private String payName;  //支付方式
+    private String payName;  //pay method
     private String payImg;  //
     private int payid;
     private int sortid;
     private long crdate;
     private boolean income;
-    private String sortName;  //账单分类
+    private String sortName;  //
     private String sortImg;  //
 
     public BillBean() {

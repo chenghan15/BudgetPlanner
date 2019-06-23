@@ -3,15 +3,15 @@ package com.cheng.budgetplanner.bean;
 import java.util.List;
 
 /**
- * 月账单Chart信息
+ * moth Chart
  */
 public class MonthAccountBean extends BaseBean {
 
     float totalOut;    //expenses
     float totalIn;    //income
-    String l_totalOut;  //上月expenses
-    String l_totalIn;  //上月income
-    List<PayTypeListBean> list;    //账单分类统计expense
+    String l_totalOut;  //expenses
+    String l_totalIn;  //income
+    List<PayTypeListBean> list;    //expense type list
 
     public float getTotalOut() {
         return totalOut;

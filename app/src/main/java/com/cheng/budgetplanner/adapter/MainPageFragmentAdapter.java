@@ -10,8 +10,8 @@ import java.util.List;
 
 public class MainPageFragmentAdapter extends FragmentPagerAdapter {
 
-    private List<Fragment> mFragments ;//添加的Fragment的集合
-    private List<String> mFragmentsTitles ;//每个Fragment对应的title的集合
+    private List<Fragment> mFragments ;//Fragment list
+    private List<String> mFragmentsTitles ;// Fragment titles list
 
     public MainPageFragmentAdapter(FragmentManager fm) {
         super(fm);
@@ -19,8 +19,8 @@ public class MainPageFragmentAdapter extends FragmentPagerAdapter {
         mFragmentsTitles = new ArrayList<>();
     }
     /**
-     * @param fragment      添加Fragment
-     * @param fragmentTitle Fragment的标题，即TabLayout中对应Tab的标题
+     * @param fragment      add Fragment
+     * @param fragmentTitle
      */
     public void addFragment(Fragment fragment, String fragmentTitle) {
         mFragments.add(fragment);
@@ -29,19 +29,19 @@ public class MainPageFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        //得到对应position的Fragment
+
         return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        //返回Fragment的数量
+
         return mFragments.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        //得到对应position的Fragment的title
+
         return mFragmentsTitles.get(position);
     }
 }

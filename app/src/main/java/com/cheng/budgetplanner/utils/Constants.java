@@ -3,20 +3,12 @@ package com.cheng.budgetplanner.utils;
 public class Constants {
     public static final String BASE_URL = "";
 
-    public static final String IMAGEDETAIL ="/UF/Uploads/Noteimg/listout/";
-    public static final String IMAGENOTE ="/UF/Uploads/Noteimg/blacksort/";
-
-    public static final String CACHE = "cache";
-    public static final int LATEST_COLUMN = Integer.MAX_VALUE;
-    public static final int BASE_COLUMN = 100000000;
-
-    public static final String IMAGE_SORT = "/upload/noteImg/sort/";
 
     public static final String IMAGE_PAY = "/upload/noteImg/pay/";
 
     public static int currentUserId=0;
 
-    //默认note(账单分类和支付方式)
+    //sort note and payment type
     public static String BILL_NOTE = "{\"status\":100,\"message\":\"succeed！\"," +
             "\"outSortlis\":[" +
             "{\"id\":1,\"uid\":0,\"sortName\":\"repayment\",\"sortImg\":\"sort_huankuan.png\",\"priority\":0,\"income\":false}," +

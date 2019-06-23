@@ -1,13 +1,7 @@
 package com.cheng.budgetplanner.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.provider.SyncStateContract;
-import android.view.Window;
-import android.view.WindowManager;
 import com.cheng.budgetplanner.R;
-import com.cheng.budgetplanner.utils.Constants;
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
@@ -38,7 +32,7 @@ public class SplashActivity extends AwesomeSplash {
         configSplash.setAnimLogoSplashTechnique(Techniques.Bounce); //choose one form Techniques
 
         //Customize Title
-        configSplash.setTitleSplash("Budget Planner App");
+        configSplash.setTitleSplash("Budget Planner");
         configSplash.setTitleTextColor(R.color.white);
         configSplash.setTitleTextSize(30f); //float value
         configSplash.setAnimTitleDuration(100);

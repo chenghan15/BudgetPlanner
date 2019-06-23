@@ -81,8 +81,8 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
         @Override
         public void onClick(View view) {
             if (eContext==null){
-                if (mDatas.get(getAdapterPosition()).getSortName().equals("添加")){//添加按钮
-                    Toast.makeText(mContext, "点击添加", Toast.LENGTH_SHORT).show();
+                if (mDatas.get(getAdapterPosition()).getSortName().equals("add")){
+                    Toast.makeText(mContext, "click to add", Toast.LENGTH_SHORT).show();
 
                 }else if (!mContext.lastBean.equals(mDatas.get(getAdapterPosition()))){
                     mDatas.get(getAdapterPosition()).setSelected(true);
@@ -94,8 +94,8 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
                     mContext.lastBean = mDatas.get(getAdapterPosition());
                 }
             }else {
-                if (mDatas.get(getAdapterPosition()).getSortName().equals("添加")){//添加按钮
-                    Toast.makeText(eContext, "点击添加", Toast.LENGTH_SHORT).show();
+                if (mDatas.get(getAdapterPosition()).getSortName().equals("add")){
+                    Toast.makeText(eContext, "click to add", Toast.LENGTH_SHORT).show();
                 }else if (!eContext.lastBean.equals(mDatas.get(getAdapterPosition()))){
                     mDatas.get(getAdapterPosition()).setSelected(true);
 //                    String selectUrl = baseUrl.replace("blacksort","checksort");
@@ -110,7 +110,7 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
 
         @Override
         public boolean onLongClick(View view) {
-            //根据自己需求进行判断
+
             if (mDatas.get(getAdapterPosition()).getUid() > 0 ){
                 Toast.makeText(mContext, "Long press to edit", Toast.LENGTH_SHORT).show();
             }
