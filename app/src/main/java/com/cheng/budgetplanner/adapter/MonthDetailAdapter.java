@@ -30,7 +30,7 @@ import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_YMDHMS;
 
 public class MonthDetailAdapter extends StickyHeaderGridAdapter {
 
-    private Context mContext;
+    private Context m_Context;
 
     private String baseUrl = "";
 
@@ -41,7 +41,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
     }
 
     public MonthDetailAdapter(Context context, List<MonthDetailBean.DaylistBean> datas) {
-        this.mContext = context;
+        this.m_Context = context;
         this.monthData = datas;
     }
 
@@ -85,7 +85,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
 //        final int sortId = monthData.get(section).getList().get(position).getSortid();
 
         holder.item_title.setText(monthData.get(section).getList().get(position).getSortName());
-        Glide.with(mContext).load(baseUrl + monthData.get(section).getList().get(position).getSortImg())
+        Glide.with(m_Context).load(baseUrl + monthData.get(section).getList().get(position).getSortImg())
                 .into(holder.item_img);
 
         if (monthData.get(section).getList().get(position).isIncome()) {
@@ -102,7 +102,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                 final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
 
                 //confirm delete
-                new AlertDialog.Builder(mContext).setTitle("Delete this record?")
+                new AlertDialog.Builder(m_Context).setTitle("Delete this record?")
                         .setNegativeButton("Cancel", null)
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
@@ -123,7 +123,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
             public void onClick(View v) {
                 final int section = getAdapterPositionSection(holder.getAdapterPosition());
                 final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
-                Intent intent=new Intent(mContext, EditBillActivity.class);
+                Intent intent=new Intent(m_Context, EditBillActivity.class);
                 Bundle bundle=new Bundle();
                 BillBean bi= monthData.get(section).getList().get(offset);
                 bundle.putLong("_id",bi.get_Id());
@@ -135,7 +135,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                 bundle.putLong("date",bi.getCrdate());
                 bundle.putBoolean("income",bi.isIncome());
                 intent.putExtra("bundle",bundle);
-                ((Activity) mContext).startActivityForResult(intent, 0);
+                ((Activity) m_Context).startActivityForResult(intent, 0);
             }
         });
         //listen to item layout click
@@ -144,7 +144,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
             public void onClick(View view) {
                 final int section = getAdapterPositionSection(holder.getAdapterPosition());
                 final int offset = getItemSectionOffset(section, holder.getAdapterPosition());
-                final AlertDialog alertDialog=new AlertDialog.Builder(mContext).setTitle("Comments")
+                final AlertDialog alertDialog=new AlertDialog.Builder(m_Context).setTitle("Comments")
                         .setPositiveButton("Got it", null)
                         .show();
                 final Window window = alertDialog.getWindow();
@@ -154,7 +154,7 @@ public class MonthDetailAdapter extends StickyHeaderGridAdapter {
                 TextView date_text = (TextView) window.findViewById(R.id.dialog_bill_tv_date);
                 ImageView bill_imgView=(ImageView)window.findViewById(R.id.dialog_bill_iv);
                 TextView btn_textview=(TextView) window.findViewById(R.id.dialog_bill_btn);
-                Glide.with(mContext).load(baseUrl + monthData.get(section).getList().get(offset).getSortImg())
+                Glide.with(m_Context).load(baseUrl + monthData.get(section).getList().get(offset).getSortImg())
                         .into(bill_imgView);
                 String content= monthData.get(section).getList().get(offset).getContent();
                 if(!content.equals("null")){

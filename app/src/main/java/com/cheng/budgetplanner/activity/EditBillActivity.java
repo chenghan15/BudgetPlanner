@@ -58,7 +58,7 @@ public class EditBillActivity extends BaseActivity {
     @BindView(R.id.layout_icon)
     LinearLayout layoutIcon;
 
-    public boolean isOutcome = true;
+    public boolean m_isOutcome = true;
 
     //calculate
     private boolean hasDot;
@@ -69,20 +69,20 @@ public class EditBillActivity extends BaseActivity {
     private int digitsCount = 0;
 
     //card(account) selection
-    private OptionsPickerView pvCustomOptions;
-    private List<String> cardItem;
-    private int selectedPayinfoIndex = 0;
+    private OptionsPickerView m_accountPickerView;
+    private List<String> m_accountItemName;
+    private int m_selectedPayInfoIndex = 0;
     
     //kindlist page
     private int page;
     private boolean isTotalPage;
     private int sortPage = -1;
-    private List<NoteBean.KindlistBean> mDatas;
-    private List<NoteBean.KindlistBean> tempList;
+    private List<NoteBean.KindlistBean> m_kindListData;
+    private List<NoteBean.KindlistBean> tempKindList;
 
     //last selected kind
-    public NoteBean.KindlistBean lastBean;
-    public ImageView lastImg;
+    public NoteBean.KindlistBean m_lastBean;
+    public ImageView m_lastImg;
 
 
     private AlertDialog alertDialog;
@@ -94,8 +94,8 @@ public class EditBillActivity extends BaseActivity {
     private String days;
 
     //comments
-    private String remarkInput = "";
-    private NoteBean noteBean = null;
+    private String m_remarkInput = "";
+    private NoteBean m_noteBean = null;
 
     //old Bill
     private Bundle oldBill;
@@ -112,7 +112,7 @@ public class EditBillActivity extends BaseActivity {
 
 
         Gson gson = new Gson();
-        noteBean = gson.fromJson(Constants.BILL_KIND_INFO, NoteBean.class);
+        m_noteBean = gson.fromJson(Constants.BILL_KIND_INFO, NoteBean.class);
         setTitleStatus();
 
 
@@ -134,8 +134,8 @@ public class EditBillActivity extends BaseActivity {
 
         days=DateUtils.long2Str(oldBill.getLong("date"),FORMAT_YMD);
         dateTv.setText(days);
-        isOutcome=!oldBill.getBoolean("income");
-        remarkInput= oldBill.getString("content");
+        m_isOutcome =!oldBill.getBoolean("income");
+        m_remarkInput = oldBill.getString("content");
         DecimalFormat df= new DecimalFormat("######0.00");
         String money= df.format(oldBill.getDouble("cost"));
 
@@ -149,13 +149,13 @@ public class EditBillActivity extends BaseActivity {
 
 
     private NoteBean.KindlistBean findSortById(int id){
-        if (isOutcome){
-            for (NoteBean.KindlistBean e:noteBean.getOutSortlis()) {
+        if (m_isOutcome){
+            for (NoteBean.KindlistBean e: m_noteBean.getOutSortlis()) {
                 if (e.getId()==id)
                     return e;
             }
         }else {
-            for (NoteBean.KindlistBean e:noteBean.getInSortlis()) {
+            for (NoteBean.KindlistBean e: m_noteBean.getInSortlis()) {
                 if (e.getId()==id)
                     return e;
             }
@@ -163,7 +163,7 @@ public class EditBillActivity extends BaseActivity {
         return null;
     }
     private int findPayById(int id){
-        List<NoteBean.PaymentInfoBean> list=noteBean.getPayinfo();
+        List<NoteBean.PaymentInfoBean> list= m_noteBean.getPayinfo();
         for (int i=0;i<list.size();i++){
             if(list.get(i).getId()==id)
                 return i;
@@ -176,27 +176,27 @@ public class EditBillActivity extends BaseActivity {
     private void setTitleStatus() {
 
 
-        if (isOutcome) {
+        if (m_isOutcome) {
             outcomeTv.setSelected(true);
             incomeTv.setSelected(false);
-            mDatas = noteBean.getOutSortlis();
+            m_kindListData = m_noteBean.getOutSortlis();
         } else {
             incomeTv.setSelected(true);
             outcomeTv.setSelected(false);
-            mDatas = noteBean.getInSortlis();
+            m_kindListData = m_noteBean.getInSortlis();
         }
 
-        lastBean = findSortById(oldBill.getInt("sortId"));
-        lastImg = new ImageView(this);
+        m_lastBean = findSortById(oldBill.getInt("sortId"));
+        m_lastImg = new ImageView(this);
 
-        cardItem = new ArrayList<>();
-        for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
-            String itemStr = noteBean.getPayinfo().get(i).getPayName();
-            cardItem.add(itemStr);
+        m_accountItemName = new ArrayList<>();
+        for (int i = 0; i < m_noteBean.getPayinfo().size(); i++) {
+            String itemStr = m_noteBean.getPayinfo().get(i).getPayName();
+            m_accountItemName.add(itemStr);
         }
 
-        selectedPayinfoIndex=findPayById(oldBill.getInt("payId"));
-        cashTv.setText(cardItem.get(selectedPayinfoIndex));
+        m_selectedPayInfoIndex =findPayById(oldBill.getInt("payId"));
+        cashTv.setText(m_accountItemName.get(m_selectedPayInfoIndex));
 
         initViewPager();
     }
@@ -204,28 +204,28 @@ public class EditBillActivity extends BaseActivity {
     private void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();// LayoutInflater
         viewList = new ArrayList<>();// View collection
-        if (mDatas.size() % 10 == 0)
+        if (m_kindListData.size() % 10 == 0)
             isTotalPage = true;
-        page = (int) Math.ceil(mDatas.size() * 1.0 / 10);
+        page = (int) Math.ceil(m_kindListData.size() * 1.0 / 10);
         for (int i = 0; i < page; i++) {
-            tempList = new ArrayList<>();
+            tempKindList = new ArrayList<>();
             View view = inflater.inflate(R.layout.pager_item_type_cell, null);
             RecyclerView recycle = (RecyclerView) view.findViewById(R.id.pager_type_recycle);
             if (i != page - 1 || (i == page - 1 && isTotalPage)) {
                 for (int j = 0; j < 10; j++) {
                     if (i != 0) {
-                        tempList.add(mDatas.get(i * 10 + j));
+                        tempKindList.add(m_kindListData.get(i * 10 + j));
                     } else {
-                        tempList.add(mDatas.get(i + j));
+                        tempKindList.add(m_kindListData.get(i + j));
                     }
                 }
             } else {
-                for (int j = 0; j < mDatas.size() % 10; j++) {
-                    tempList.add(mDatas.get(i * 10 + j));
+                for (int j = 0; j < m_kindListData.size() % 10; j++) {
+                    tempKindList.add(m_kindListData.get(i * 10 + j));
                 }
             }
 
-            BookNoteAdapter mAdapter = new BookNoteAdapter(this, tempList);
+            BookNoteAdapter mAdapter = new BookNoteAdapter(this, tempKindList);
             GridLayoutManager layoutManager = new GridLayoutManager(this, 5);
             recycle.setLayoutManager(layoutManager);
             recycle.setAdapter(mAdapter);
@@ -295,24 +295,24 @@ public class EditBillActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.note_income://income
-//                isOutcome = false;
+//                m_isOutcome = false;
 //                setTitleStatus();
                 break;
             case R.id.note_outcome://expense
-//                isOutcome = true;
+//                m_isOutcome = true;
 //                setTitleStatus();
                 break;
             case R.id.note_cash://cash
-                pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+                m_accountPickerView = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                        selectedPayinfoIndex = options1;
-                        cashTv.setText(cardItem.get(options1));
+                        m_selectedPayInfoIndex = options1;
+                        cashTv.setText(m_accountItemName.get(options1));
                     }
                 })
                         .build();
-                pvCustomOptions.setPicker(cardItem);
-                pvCustomOptions.show();
+                m_accountPickerView.setPicker(m_accountItemName);
+                m_accountPickerView.show();
                 break;
             case R.id.note_date://date
 
@@ -349,9 +349,9 @@ public class EditBillActivity extends BaseActivity {
 
                 final EditText editText = new EditText(EditBillActivity.this);
 
-                editText.setText(remarkInput);
+                editText.setText(m_remarkInput);
                 //setting custor to the end
-                editText.setSelection(remarkInput.length());
+                editText.setSelection(m_remarkInput.length());
 
                 //confirm dialog
                 alertDialog = new AlertDialog.Builder(this)
@@ -364,7 +364,7 @@ public class EditBillActivity extends BaseActivity {
                                     Toast.makeText(getApplicationContext(), "Content should not be null！" + input,
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    remarkInput = input;
+                                    m_remarkInput = input;
                                 }
                             }
                         })
@@ -387,7 +387,7 @@ public class EditBillActivity extends BaseActivity {
                     break;
                 }
 
-                LocalDB.getInstance().getDBOperation().updateBill(oldBill.getLong("_id"), Float.valueOf(integerPartNum + dotNum), remarkInput, Constants.currentUserId, lastBean.getId(), lastBean.getSortName(), lastBean.getSortImg(), noteBean.getPayinfo().get(selectedPayinfoIndex).getId(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(), DateUtils.getMillis(crDate), !isOutcome);
+                LocalDB.getInstance().getDBOperation().updateBill(oldBill.getLong("_id"), Float.valueOf(integerPartNum + dotNum), m_remarkInput, Constants.currentUserId, m_lastBean.getId(), m_lastBean.getSortName(), m_lastBean.getSortImg(), m_noteBean.getPayinfo().get(m_selectedPayInfoIndex).getId(), m_noteBean.getPayinfo().get(m_selectedPayInfoIndex).getPayName(), m_noteBean.getPayinfo().get(m_selectedPayInfoIndex).getPayImg(), DateUtils.getMillis(crDate), !m_isOutcome);
 
                 Intent intent = new Intent();
 //                intent.putExtra("billJsonStr", "ok");

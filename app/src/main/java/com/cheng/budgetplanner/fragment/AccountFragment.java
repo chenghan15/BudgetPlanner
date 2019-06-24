@@ -48,13 +48,13 @@ public class AccountFragment extends BaseFragment {
     SwipeRefreshLayout swipe;
 
 
-    private AccountCardAdapter adapter;
+    private AccountCardAdapter m_adapter;
 
-    private MonthAccountBean monthAccountBean;
-    private List<MonthAccountBean.PayTypeListBean> list;
+    private MonthAccountBean m_monthAccountBean;
+    private List<MonthAccountBean.PayTypeListBean> m_payTypeList;
 
-    private String setYear = DateUtils.getCurYear(FORMAT_Y);
-    private String setMonth = DateUtils.getCurMonth(FORMAT_M);
+    private String m_setYear = DateUtils.getCurYear(FORMAT_Y);
+    private String m_setMonth = DateUtils.getCurMonth(FORMAT_M);
 
 
     @Override
@@ -77,39 +77,39 @@ public class AccountFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 swipe.setRefreshing(false);
-                setAcountData(Constants.currentUserId, setYear, setMonth);
+                setAcountData(Constants.currentUserId, m_setYear, m_setMonth);
             }
         });
 
         rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AccountCardAdapter(getActivity(), list);
-        adapter.setmListener(new AccountCardAdapter.OnItemClickListener() {
+        m_adapter = new AccountCardAdapter(getActivity(), m_payTypeList);
+        m_adapter.setM_Listener(new AccountCardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
             }
         });
-        rvList.setAdapter(adapter);
+        rvList.setAdapter(m_adapter);
 
         //setting current month date
-        setAcountData(Constants.currentUserId, setYear, setMonth);
+        setAcountData(Constants.currentUserId, m_setYear, m_setMonth);
     }
 
 
     private void setAcountData(final int userid, String year, String month) {
 
-        dataYear.setText(setYear + " Y");
-        dataMonth.setText(setMonth);
+        dataYear.setText(m_setYear + " Y");
+        dataMonth.setText(m_setMonth);
 
 
         List<BillBean> bBills = LocalDB.getInstance().getDBOperation().getAllBills(Integer.valueOf(year), Integer.valueOf(month));
 
-        monthAccountBean = BillUtils.packageAccountList(bBills);
+        m_monthAccountBean = BillUtils.packageAccountList(bBills);
 
-        tOutcome.setText("" + monthAccountBean.getTotalOut());
-        tIncome.setText("" + monthAccountBean.getTotalIn());
-        list = monthAccountBean.getList();
-        adapter.setmDatas(list);
-        adapter.notifyDataSetChanged();
+        tOutcome.setText("" + m_monthAccountBean.getTotalOut());
+        tIncome.setText("" + m_monthAccountBean.getTotalIn());
+        m_payTypeList = m_monthAccountBean.getList();
+        m_adapter.setM_payTypeList(m_payTypeList);
+        m_adapter.notifyDataSetChanged();
     }
 
     @OnClick({R.id.layout_data,R.id.top_ll_out})
@@ -120,9 +120,9 @@ public class AccountFragment extends BaseFragment {
                 new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {
-                        setYear=DateUtils.date2Str(date, "yyyy");
-                        setMonth=DateUtils.date2Str(date, "MM");
-                        setAcountData(Constants.currentUserId,setYear,setMonth);
+                        m_setYear =DateUtils.date2Str(date, "yyyy");
+                        m_setMonth =DateUtils.date2Str(date, "MM");
+                        setAcountData(Constants.currentUserId, m_setYear, m_setMonth);
                     }
                 }).setRangDate(null, Calendar.getInstance())
                         .setType(new boolean[]{true, true, false, false, false, false})

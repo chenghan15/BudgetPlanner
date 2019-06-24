@@ -15,36 +15,36 @@ import java.util.List;
 
 public class MonthChartAdapter extends RecyclerView.Adapter<MonthChartAdapter.ViewHolder>{
 
-    private Context mContext;
-    private LayoutInflater mInflater;
-    private List<BillBean> mDatas;
-    private String sortName;
+    private Context m_Context;
+    private LayoutInflater m_Inflater;
+    private List<BillBean> m_billBeanList;
+    private String m_sortName;
 
-    public void setSortName(String sortName) {
-        this.sortName = sortName;
+    public void setM_sortName(String m_sortName) {
+        this.m_sortName = m_sortName;
     }
 
-    public void setmDatas(List<BillBean> mDatas) {
-        this.mDatas = mDatas;
+    public void setM_billBeanList(List<BillBean> m_billBeanList) {
+        this.m_billBeanList = m_billBeanList;
     }
 
     public MonthChartAdapter(Context context, List<BillBean> datas){
-        this.mContext = context;
-        this.mInflater = LayoutInflater.from(context);
-        this. mDatas = datas;
+        this.m_Context = context;
+        this.m_Inflater = LayoutInflater.from(context);
+        this.m_billBeanList = datas;
     }
 
 
     @Override
     public int getItemCount() {
-        return (mDatas== null) ? 0 : mDatas.size();
+        return (m_billBeanList == null) ? 0 : m_billBeanList.size();
     }
 
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_chart_type_ranking, parent, false);
+        View view = m_Inflater.inflate(R.layout.item_chart_type_ranking, parent, false);
         return new ViewHolder(view);
     }
 
@@ -52,8 +52,8 @@ public class MonthChartAdapter extends RecyclerView.Adapter<MonthChartAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.rank.setText(position+1+"");
-        holder.title.setText(sortName);
-        holder.money.setText(""+mDatas.get(position).getCost());
+        holder.title.setText(m_sortName);
+        holder.money.setText(""+ m_billBeanList.get(position).getCost());
 
     }
 

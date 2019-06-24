@@ -7,32 +7,33 @@ import android.view.ViewGroup;
 import java.util.List;
 
 public class MonthAccountAdapter extends PagerAdapter {
-	private List<View> imageViews ;
-	private String[] mTitles ;
+	private List<View> m_imageViews;
+	private String[] m_Titles;
+
     public MonthAccountAdapter(List<View> imageViews){
-    	this.imageViews = imageViews;
+    	this.m_imageViews = imageViews;
     }
     public MonthAccountAdapter(List<View> imageViews, String[] mTitles){
-    	this.imageViews = imageViews;
-    	this.mTitles= mTitles;
+    	this.m_imageViews = imageViews;
+    	this.m_Titles = mTitles;
     }
 	@Override
 	public int getCount() {
-		return imageViews.size();
+		return m_imageViews.size();
 	}
 	
 	@Override
 	public CharSequence getPageTitle(int position) {
-		return mTitles[position];
+		return m_Titles[position];
 	}
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
-		container.addView(imageViews.get(position));
-		return imageViews.get(position);
+		container.addView(m_imageViews.get(position));
+		return m_imageViews.get(position);
 	}
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-    	container.removeView(imageViews.get(position));
+    	container.removeView(m_imageViews.get(position));
     }
 	@Override
 	public boolean isViewFromObject(View arg0, Object arg1) {

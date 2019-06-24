@@ -19,47 +19,47 @@ import java.util.List;
 
 public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHolder>{
 
-    private AddBillActivity mContext;
-    private EditBillActivity eContext;
-    private LayoutInflater mInflater;
-    private List<NoteBean.KindlistBean> mDatas;
+    private AddBillActivity m_AddBillContext;
+    private EditBillActivity m_EditBillContext;
+    private LayoutInflater m_Inflater;
+    private List<NoteBean.KindlistBean> m_kindListData;
 
 
-    public void setmDatas(List<NoteBean.KindlistBean> mDatas) {
-        this.mDatas = mDatas;
+    public void setM_kindListData(List<NoteBean.KindlistBean> m_kindListData) {
+        this.m_kindListData = m_kindListData;
     }
 
     public BookNoteAdapter(AddBillActivity context, List<NoteBean.KindlistBean> datas){
-        this.mContext = context;
-        this.eContext = null;
-        this.mInflater = LayoutInflater.from(context);
-        this. mDatas = datas;
+        this.m_AddBillContext = context;
+        this.m_EditBillContext = null;
+        this.m_Inflater = LayoutInflater.from(context);
+        this.m_kindListData = datas;
 
     }
 
     public BookNoteAdapter(EditBillActivity context, List<NoteBean.KindlistBean> datas){
-        this.mContext = null;
-        this.eContext = context;
-        this.mInflater = LayoutInflater.from(context);
-        this. mDatas = datas;
+        this.m_AddBillContext = null;
+        this.m_EditBillContext = context;
+        this.m_Inflater = LayoutInflater.from(context);
+        this.m_kindListData = datas;
 
     }
 
     @Override
     public int getItemCount() {
-        return (mDatas== null) ? 0 : mDatas.size();
+        return (m_kindListData == null) ? 0 : m_kindListData.size();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_type_cell, parent, false);
+        View view = m_Inflater.inflate(R.layout.item_type_cell, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.title.setText(mDatas.get(position).getSortName());
-        holder.img.setImageDrawable(ImageUtils.getDrawable(mDatas.get(position).getSortImg()));
+        holder.title.setText(m_kindListData.get(position).getSortName());
+        holder.img.setImageDrawable(ImageUtils.getDrawable(m_kindListData.get(position).getSortImg()));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
@@ -79,24 +79,24 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            if (eContext==null){
-                if (mDatas.get(getAdapterPosition()).getSortName().equals("add")){
-                    Toast.makeText(mContext, "click to add", Toast.LENGTH_SHORT).show();
+            if (m_EditBillContext ==null){
+                if (m_kindListData.get(getAdapterPosition()).getSortName().equals("add")){
+                    Toast.makeText(m_AddBillContext, "click to add", Toast.LENGTH_SHORT).show();
 
-                }else if (!mContext.lastBean.equals(mDatas.get(getAdapterPosition()))){
-                    mDatas.get(getAdapterPosition()).setSelected(true);
+                }else if (!m_AddBillContext.m_lastBean.equals(m_kindListData.get(getAdapterPosition()))){
+                    m_kindListData.get(getAdapterPosition()).setSelected(true);
 
-                    mContext.lastImg = img;
-                    mContext.lastBean = mDatas.get(getAdapterPosition());
+                    m_AddBillContext.m_lastImg = img;
+                    m_AddBillContext.m_lastBean = m_kindListData.get(getAdapterPosition());
                 }
             }else {
-                if (mDatas.get(getAdapterPosition()).getSortName().equals("add")){
-                    Toast.makeText(eContext, "click to add", Toast.LENGTH_SHORT).show();
-                }else if (!eContext.lastBean.equals(mDatas.get(getAdapterPosition()))){
-                    mDatas.get(getAdapterPosition()).setSelected(true);
+                if (m_kindListData.get(getAdapterPosition()).getSortName().equals("add")){
+                    Toast.makeText(m_EditBillContext, "click to add", Toast.LENGTH_SHORT).show();
+                }else if (!m_EditBillContext.m_lastBean.equals(m_kindListData.get(getAdapterPosition()))){
+                    m_kindListData.get(getAdapterPosition()).setSelected(true);
 
-                    eContext.lastImg = img;
-                    eContext.lastBean = mDatas.get(getAdapterPosition());
+                    m_EditBillContext.m_lastImg = img;
+                    m_EditBillContext.m_lastBean = m_kindListData.get(getAdapterPosition());
                 }
             }
         }
@@ -104,8 +104,8 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
         @Override
         public boolean onLongClick(View view) {
 
-            if (mDatas.get(getAdapterPosition()).getUid() > 0 ){
-                Toast.makeText(mContext, "Long press to edit", Toast.LENGTH_SHORT).show();
+            if (m_kindListData.get(getAdapterPosition()).getUid() > 0 ){
+                Toast.makeText(m_AddBillContext, "Long press to edit", Toast.LENGTH_SHORT).show();
             }
             return false;
         }

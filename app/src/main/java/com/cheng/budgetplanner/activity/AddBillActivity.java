@@ -62,7 +62,7 @@ public class AddBillActivity extends BaseActivity {
     @BindView(R.id.layout_icon)
     LinearLayout layoutIcon;
 
-    public boolean isOutcome = true;
+    public boolean m_isOutcome = true;
 
     //Calculate deal with input numbers
     private boolean hasDot;
@@ -73,20 +73,20 @@ public class AddBillActivity extends BaseActivity {
     private int digitsCount = 0;
 
     //card(account) selection
-    private OptionsPickerView pvCustomOptions;
-    private List<String> cardItem;
-    private int selectedPayinfoIndex=0;
+    private OptionsPickerView m_accountPickerView;
+    private List<String> m_accountItemName;
+    private int m_selectedPayInfoIndex =0;
 
     //kindlist page
     private int page ;
     private boolean isTotalPage;
     private int sortPage = -1;
-    private List<NoteBean.KindlistBean> mDatas;
-    private List<NoteBean.KindlistBean> tempList;
+    private List<NoteBean.KindlistBean> m_kindListData;
+    private List<NoteBean.KindlistBean> tempKindList;
 
     //last selected kind
-    public NoteBean.KindlistBean lastBean;
-    public ImageView lastImg;
+    public NoteBean.KindlistBean m_lastBean;
+    public ImageView m_lastImg;
 
     //dialog
     private AlertDialog alertDialog;
@@ -98,8 +98,8 @@ public class AddBillActivity extends BaseActivity {
     private String days;
 
     //comments
-    private String remarkInput="";
-    private NoteBean noteBean = null;
+    private String m_remarkInput ="";
+    private NoteBean m_noteBean = null;
 
 
     @Override
@@ -111,9 +111,8 @@ public class AddBillActivity extends BaseActivity {
     protected void initEventAndData() {
 
         Gson gson = new Gson();
-        noteBean = gson.fromJson(Constants.BILL_KIND_INFO, NoteBean.class);
+        m_noteBean = gson.fromJson(Constants.BILL_KIND_INFO, NoteBean.class);
         setTitleStatus();
-
 
         //setting date
         mYear = Integer.parseInt(DateUtils.getCurYear(FORMAT_Y));
@@ -129,23 +128,23 @@ public class AddBillActivity extends BaseActivity {
      */
     private void setTitleStatus() {
 
-        if (isOutcome){
+        if (m_isOutcome){
             outcomeTv.setSelected(true);
             incomeTv.setSelected(false);
-            mDatas = noteBean.getOutSortlis();
+            m_kindListData = m_noteBean.getOutSortlis();
         }else{
             incomeTv.setSelected(true);
             outcomeTv.setSelected(false);
-            mDatas = noteBean.getInSortlis();
+            m_kindListData = m_noteBean.getInSortlis();
         }
 
-        lastBean = mDatas.get(0);
-        lastImg = new ImageView(this);
+        m_lastBean = m_kindListData.get(0);
+        m_lastImg = new ImageView(this);
 
-        cardItem = new ArrayList<>();
-        for (int i = 0; i < noteBean.getPayinfo().size(); i++) {
-            String itemStr=noteBean.getPayinfo().get(i).getPayName();
-            cardItem.add(itemStr);
+        m_accountItemName = new ArrayList<>();
+        for (int i = 0; i < m_noteBean.getPayinfo().size(); i++) {
+            String itemStr= m_noteBean.getPayinfo().get(i).getPayName();
+            m_accountItemName.add(itemStr);
         }
 
         initViewPager();
@@ -154,28 +153,28 @@ public class AddBillActivity extends BaseActivity {
     private void initViewPager() {
         LayoutInflater inflater = this.getLayoutInflater();
         viewList = new ArrayList<>();
-        if (mDatas.size() % 10 == 0)
+        if (m_kindListData.size() % 10 == 0)
             isTotalPage = true;
-        page = (int) Math.ceil(mDatas.size() * 1.0 / 10);
+        page = (int) Math.ceil(m_kindListData.size() * 1.0 / 10);
         for (int i = 0; i < page; i++) {
-            tempList = new ArrayList<>();
+            tempKindList = new ArrayList<>();
             View view = inflater.inflate(R.layout.pager_item_type_cell, null);
             RecyclerView recycle = (RecyclerView) view.findViewById(R.id.pager_type_recycle);
             if (i != page - 1 || (i == page -1 && isTotalPage)){
                 for (int j = 0; j < 10; j++) {
                     if (i != 0 ){
-                        tempList.add(mDatas.get(i * 10 + j));
+                        tempKindList.add(m_kindListData.get(i * 10 + j));
                     }else {
-                        tempList.add(mDatas.get(i + j));
+                        tempKindList.add(m_kindListData.get(i + j));
                     }
                 }
             }else {
-                for (int j = 0; j < mDatas.size() % 10; j++) {
-                    tempList.add(mDatas.get(i * 10 + j));
+                for (int j = 0; j < m_kindListData.size() % 10; j++) {
+                    tempKindList.add(m_kindListData.get(i * 10 + j));
                 }
             }
 
-            BookNoteAdapter mAdapter = new BookNoteAdapter(this, tempList);
+            BookNoteAdapter mAdapter = new BookNoteAdapter(this, tempKindList);
             GridLayoutManager layoutManager = new GridLayoutManager(this, 5);
             recycle.setLayoutManager(layoutManager);
             recycle.setAdapter(mAdapter);
@@ -243,24 +242,24 @@ public class AddBillActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.note_income://income
-                isOutcome=false;
+                m_isOutcome =false;
                 setTitleStatus();
                 break;
             case R.id.note_outcome://expense
-                isOutcome=true;
+                m_isOutcome =true;
                 setTitleStatus();
                 break;
             case R.id.note_cash://cash
-                pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+                m_accountPickerView = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                        selectedPayinfoIndex=options1;
-                        cashTv.setText(cardItem.get(options1));
+                        m_selectedPayInfoIndex =options1;
+                        cashTv.setText(m_accountItemName.get(options1));
                     }
                 })
                         .build();
-                pvCustomOptions.setPicker(cardItem);
-                pvCustomOptions.show();
+                m_accountPickerView.setPicker(m_accountItemName);
+                m_accountPickerView.show();
                 break;
             case R.id.note_date://date
 
@@ -297,9 +296,9 @@ public class AddBillActivity extends BaseActivity {
 
                 final EditText editText = new EditText(AddBillActivity.this);
 
-                editText.setText(remarkInput);
+                editText.setText(m_remarkInput);
 
-                editText.setSelection(remarkInput.length());
+                editText.setSelection(m_remarkInput.length());
 
 
                 alertDialog=new AlertDialog.Builder(this)
@@ -313,7 +312,7 @@ public class AddBillActivity extends BaseActivity {
                                             Toast.LENGTH_SHORT).show();
                                 }
                                 else {
-                                    remarkInput=input;
+                                    m_remarkInput =input;
                                 }
                             }
                         })
@@ -338,15 +337,15 @@ public class AddBillActivity extends BaseActivity {
 
                 BillBean newBill = new BillBean(0,
                         Float.valueOf(integerPartNum + dotNum),
-                        remarkInput,
+                        m_remarkInput,
                         Constants.currentUserId,
-                        noteBean.getPayinfo().get(selectedPayinfoIndex).getId(),
-                        lastBean.getId(),
+                        m_noteBean.getPayinfo().get(m_selectedPayInfoIndex).getId(),
+                        m_lastBean.getId(),
                         DateUtils.getMillis(crDate),
-                        isOutcome ? false : true,
-                        noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(),
-                        noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(),
-                        lastBean.getSortName(),lastBean.getSortImg()
+                        m_isOutcome ? false : true,
+                        m_noteBean.getPayinfo().get(m_selectedPayInfoIndex).getPayName(),
+                        m_noteBean.getPayinfo().get(m_selectedPayInfoIndex).getPayImg(),
+                        m_lastBean.getSortName(), m_lastBean.getSortImg()
                         );
 
                 Gson gson = new Gson();

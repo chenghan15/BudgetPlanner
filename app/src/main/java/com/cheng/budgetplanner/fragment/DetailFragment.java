@@ -57,13 +57,13 @@ public class DetailFragment extends BaseFragment {
     FloatingActionButton floatBtn;
 
     private static final int SPAN_SIZE = 1;
-    private StickyHeaderGridLayoutManager mLayoutManager;
-    private MonthDetailAdapter adapter;
-    private List<MonthDetailBean.DaylistBean> list;
-    private MonthDetailBean data;
+    private StickyHeaderGridLayoutManager m_LayoutManager;
+    private MonthDetailAdapter m_adapter;
+    private List<MonthDetailBean.DaylistBean> m_dayBeanList;
+    private MonthDetailBean m_monthDeailBean;
 
-    private String setYear=DateUtils.getCurYear(FORMAT_Y);
-    private String setMonth=DateUtils.getCurMonth(FORMAT_M);
+    private String m_setYear =DateUtils.getCurYear(FORMAT_Y);
+    private String m_setMonth =DateUtils.getCurMonth(FORMAT_M);
 
     @Override
     protected int getLayoutId() {
@@ -74,8 +74,8 @@ public class DetailFragment extends BaseFragment {
     @Override
     protected void initEventAndData() {
 
-        dataYear.setText(setYear+" Y");
-        dataMonth.setText(setMonth);
+        dataYear.setText(m_setYear +" Y");
+        dataMonth.setText(m_setMonth);
         //setting scheme color
         swipe.setColorSchemeColors(getResources().getColor(R.color.text_red), getResources().getColor(R.color.text_red));
         //setting trigger postion pixel for sync
@@ -85,12 +85,12 @@ public class DetailFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 swipe.setRefreshing(false);
-                setBillData(Constants.currentUserId,setYear,setMonth);
+                setBillData(Constants.currentUserId, m_setYear, m_setMonth);
             }
         });
 
-        mLayoutManager = new StickyHeaderGridLayoutManager(SPAN_SIZE);
-        mLayoutManager.setHeaderBottomOverlapMargin(5);
+        m_LayoutManager = new StickyHeaderGridLayoutManager(SPAN_SIZE);
+        m_LayoutManager.setHeaderBottomOverlapMargin(5);
 
         rvList.setItemAnimator(new DefaultItemAnimator() {
             @Override
@@ -99,10 +99,10 @@ public class DetailFragment extends BaseFragment {
                 return false;
             }
         });
-        rvList.setLayoutManager(mLayoutManager);
-        adapter = new MonthDetailAdapter(mContext, list);
-        rvList.setAdapter(adapter);
-        //list right slide listener
+        rvList.setLayoutManager(m_LayoutManager);
+        m_adapter = new MonthDetailAdapter(m_Context, m_dayBeanList);
+        rvList.setAdapter(m_adapter);
+        //m_dayBeanList right slide listener
         rvList.setOnTouchListener(new View.OnTouchListener() {
             private float lastX;
             private float lastY;
@@ -134,15 +134,15 @@ public class DetailFragment extends BaseFragment {
 
         });
         //setting current month date
-        setBillData(Constants.currentUserId,setYear,setMonth);
+        setBillData(Constants.currentUserId, m_setYear, m_setMonth);
     }
 
 
     private void setBillData(final int userid, String year, String month) {
         dataYear.setText(year+" Y");
         dataMonth.setText(month);
-        //clear data
-        adapter.clear();
+        //clear m_monthDeailBean
+        m_adapter.clear();
         tOutcome.setText("0.00");
         tIncome.setText("0.00");
         //query date by year and month
@@ -154,9 +154,9 @@ public class DetailFragment extends BaseFragment {
 
         tOutcome.setText(data.getT_outcome());
         tIncome.setText(data.getT_income());
-        list = data.getDaylist();
-        adapter.setMonthData(list);
-        adapter.notifyAllSectionsDataSetChanged();//notify changes
+        m_dayBeanList = data.getDaylist();
+        m_adapter.setMonthData(m_dayBeanList);
+        m_adapter.notifyAllSectionsDataSetChanged();//notify changes
     }
 
 
@@ -172,9 +172,9 @@ public class DetailFragment extends BaseFragment {
                 new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {//call back
-                        setYear=DateUtils.date2Str(date, "yyyy");
-                        setMonth=DateUtils.date2Str(date, "MM");
-                        setBillData(Constants.currentUserId,setYear,setMonth);
+                        m_setYear =DateUtils.date2Str(date, "yyyy");
+                        m_setMonth =DateUtils.date2Str(date, "MM");
+                        setBillData(Constants.currentUserId, m_setYear, m_setMonth);
                     }
                 }).setRangDate(null, Calendar.getInstance())
                         .setType(new boolean[]{true, true, false, false, false, false})
@@ -192,7 +192,7 @@ public class DetailFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 0){
-            setBillData(Constants.currentUserId,setYear,setMonth);
+            setBillData(Constants.currentUserId, m_setYear, m_setMonth);
         }
     }
 }

@@ -18,57 +18,58 @@ import java.util.List;
 
 public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.ViewHolder>{
 
-    private Context mContext;
-    private LayoutInflater mInflater;
-    private List<MonthAccountBean.PayTypeListBean> mDatas;
+    private Context m_Context;
+    private LayoutInflater m_Inflater;
+    private List<MonthAccountBean.PayTypeListBean> m_payTypeList;
 
 
-    private OnItemClickListener mListener;
+    private OnItemClickListener m_Listener;
+
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public void setmListener(OnItemClickListener mListener) {
-        this.mListener = mListener;
+    public void setM_Listener(OnItemClickListener m_Listener) {
+        this.m_Listener = m_Listener;
     }
 
 
 
-    public void setmDatas(List<MonthAccountBean.PayTypeListBean> mDatas) {
-        this.mDatas = mDatas;
+    public void setM_payTypeList(List<MonthAccountBean.PayTypeListBean> m_payTypeList) {
+        this.m_payTypeList = m_payTypeList;
     }
 
     public AccountCardAdapter(Context context, List<MonthAccountBean.PayTypeListBean> datas){
-        this.mContext = context;
-        this.mInflater = LayoutInflater.from(context);
-        this. mDatas = datas;
+        this.m_Context = context;
+        this.m_Inflater = LayoutInflater.from(context);
+        this.m_payTypeList = datas;
 
     }
 
 
     @Override
     public int getItemCount() {
-        return (mDatas== null) ? 0 : mDatas.size();
+        return (m_payTypeList == null) ? 0 : m_payTypeList.size();
     }
 
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_account, parent, false);
+        View view = m_Inflater.inflate(R.layout.item_account, parent, false);
         return new ViewHolder(view);
     }
 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.money_out.setText("-"+mDatas.get(position).getOutcome());
-        holder.money_in.setText("+"+mDatas.get(position).getIncome());
-        holder.title.setText(mDatas.get(position).getPayName());
+        holder.money_out.setText("-"+ m_payTypeList.get(position).getOutcome());
+        holder.money_in.setText("+"+ m_payTypeList.get(position).getIncome());
+        holder.title.setText(m_payTypeList.get(position).getPayName());
 
 
-        Glide.with(mContext)
-                .load(Constants.BASE_URL + Constants.IMAGE_PAY + mDatas.get(position).getPayImg())
+        Glide.with(m_Context)
+                .load(Constants.BASE_URL + Constants.IMAGE_PAY + m_payTypeList.get(position).getPayImg())
                 .into(holder.img);
 
     }
@@ -95,8 +96,8 @@ public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.
 
         @Override
         public void onClick(View view) {
-            if(mListener != null){
-                mListener.onItemClick(getAdapterPosition());
+            if(m_Listener != null){
+                m_Listener.onItemClick(getAdapterPosition());
             }
         }
 

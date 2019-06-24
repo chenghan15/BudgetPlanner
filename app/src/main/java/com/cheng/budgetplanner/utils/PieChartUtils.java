@@ -18,7 +18,7 @@ import com.github.mikephil.charting.utils.MPPointF;
 import java.util.ArrayList;
 
 /**
- * 记账本饼状图
+ * 饼状图
  */
 
 public class PieChartUtils {

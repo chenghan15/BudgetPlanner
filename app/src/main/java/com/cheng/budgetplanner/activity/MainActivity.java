@@ -40,11 +40,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    private View drawerHeader;
-//    private TextView drawerTvAccount, drawerTvMail;
+    private View m_drawerHeader;
+
 
     // Tab
-    private int index = 0;
+//    private int index = 0;
     private FragmentManager mFragmentManager;
     private MainPageFragmentAdapter mainPageFragmentAdapter;
 
@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        drawerHeader = navigationView.inflateHeaderView(R.layout.drawer_header);
+        m_drawerHeader = navigationView.inflateHeaderView(R.layout.drawer_header);
 
         //setting drawer
         setDrawerHeaderAccount();
