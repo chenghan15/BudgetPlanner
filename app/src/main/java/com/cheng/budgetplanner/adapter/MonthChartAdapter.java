@@ -44,7 +44,7 @@ public class MonthChartAdapter extends RecyclerView.Adapter<MonthChartAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_tallytype_rank, parent, false);
+        View view = mInflater.inflate(R.layout.item_chart_type_ranking, parent, false);
         return new ViewHolder(view);
     }
 

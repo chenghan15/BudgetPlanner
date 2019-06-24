@@ -132,11 +132,11 @@ public class BillUtils {
             }
         }
 
-        List<MonthChartBean.SortTypeList> outSortlist = new ArrayList<>();    // expense
-        List<MonthChartBean.SortTypeList> inSortlist = new ArrayList<>();    // income
+        List<MonthChartBean.KindTypeList> outSortlist = new ArrayList<>();    // expense
+        List<MonthChartBean.KindTypeList> inSortlist = new ArrayList<>();    // income
 
         for (Map.Entry<String, List<BillBean>> entry : mapOut.entrySet()) {
-            MonthChartBean.SortTypeList sortTypeList = new MonthChartBean.SortTypeList();
+            MonthChartBean.KindTypeList sortTypeList = new MonthChartBean.KindTypeList();
             sortTypeList.setList(entry.getValue());
             sortTypeList.setSortName(entry.getKey());
             sortTypeList.setSortImg(entry.getValue().get(0).getSortImg());
@@ -145,7 +145,7 @@ public class BillUtils {
             outSortlist.add(sortTypeList);
         }
         for (Map.Entry<String, List<BillBean>> entry : mapIn.entrySet()) {
-            MonthChartBean.SortTypeList sortTypeList = new MonthChartBean.SortTypeList();
+            MonthChartBean.KindTypeList sortTypeList = new MonthChartBean.KindTypeList();
             sortTypeList.setList(entry.getValue());
             sortTypeList.setSortName(entry.getKey());
             sortTypeList.setSortImg(entry.getValue().get(0).getSortImg());

@@ -7,8 +7,8 @@ public class MonthChartBean extends BaseBean{
     float totalIn;    //income
     String l_totalOut;  //expenses
     String l_totalIn;  //income
-    List<SortTypeList> outSortlist;    //expense list
-    List<SortTypeList> inSortlist;    //income list
+    List<KindTypeList> outSortlist;    //expense list
+    List<KindTypeList> inSortlist;    //income list
 
     public float getTotalOut() {
         return totalOut;
@@ -42,23 +42,23 @@ public class MonthChartBean extends BaseBean{
         this.l_totalIn = l_totalIn;
     }
 
-    public List<SortTypeList> getOutSortlist() {
+    public List<KindTypeList> getOutSortlist() {
         return outSortlist;
     }
 
-    public void setOutSortlist(List<SortTypeList> outSortlist) {
+    public void setOutSortlist(List<KindTypeList> outSortlist) {
         this.outSortlist = outSortlist;
     }
 
-    public List<SortTypeList> getInSortlist() {
+    public List<KindTypeList> getInSortlist() {
         return inSortlist;
     }
 
-    public void setInSortlist(List<SortTypeList> inSortlist) {
+    public void setInSortlist(List<KindTypeList> inSortlist) {
         this.inSortlist = inSortlist;
     }
 
-    public static class SortTypeList {
+    public static class KindTypeList {
         private String back_color;
         private float  money;    //current type month money
         private String sortName;  //current type name

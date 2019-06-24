@@ -30,7 +30,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.google.gson.Gson;
 
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
@@ -90,7 +89,7 @@ public class ChartFragment extends BaseFragment
     LinearLayout layoutTypedata;
 
     private boolean TYPE = true;
-    private List<MonthChartBean.SortTypeList> tMoneyBeanList;
+    private List<MonthChartBean.KindTypeList> tMoneyBeanList;
     private String sort_image;
     private String sort_name;
     private String back_color;
@@ -105,7 +104,7 @@ public class ChartFragment extends BaseFragment
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_menu_chart;
+        return R.layout.fragment_chart;
     }
 
 

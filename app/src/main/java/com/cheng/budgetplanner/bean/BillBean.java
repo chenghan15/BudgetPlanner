@@ -2,8 +2,6 @@ package com.cheng.budgetplanner.bean;
 
 public class BillBean extends BaseBean{
 
-
-
     private long _id;
     private int id;
     private float cost;
@@ -21,7 +19,7 @@ public class BillBean extends BaseBean{
     public BillBean() {
     }
 
-    public BillBean(int id,  float cost, String content, int userid, int payid, int sortid, long crdate, boolean income, String payName, String payImg, String sortName, String sortImg) {
+    public BillBean(int id, float cost, String content, int userid, int payid, int sortid, long crdate, boolean income, String payName, String payImg, String sortName, String sortImg) {
         this.id = id;
         this.cost = cost;
         this.content = content;
@@ -36,7 +34,7 @@ public class BillBean extends BaseBean{
         this.sortImg = sortImg;
     }
 
-    public BillBean(long _id, int id,  float cost, String content, int userid, int payid, int sortid, long crdate, boolean income, String payName, String payImg, String sortName, String sortImg) {
+    public BillBean(long _id, int id, float cost, String content, int userid, int payid, int sortid, long crdate, boolean income, String payName, String payImg, String sortName, String sortImg) {
         this._id = _id;
         this.id = id;
         this.cost = cost;

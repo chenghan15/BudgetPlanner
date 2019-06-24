@@ -9,7 +9,7 @@ public class Constants {
     public static int currentUserId=0;
 
     //sort note and payment type
-    public static String BILL_NOTE = "{\"status\":100,\"message\":\"succeed！\"," +
+    public static String BILL_KIND_INFO = "{\"status\":100,\"message\":\"succeed！\"," +
             "\"outSortlis\":[" +
             "{\"id\":1,\"uid\":0,\"sortName\":\"repayment\",\"sortImg\":\"sort_huankuan.png\",\"priority\":0,\"income\":false}," +
             "{\"id\":2,\"uid\":0,\"sortName\":\"commission\",\"sortImg\":\"sort_shouxufei.png\",\"priority\":null,\"income\":false}," +

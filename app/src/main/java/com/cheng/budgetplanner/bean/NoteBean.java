@@ -4,36 +4,36 @@ import java.util.List;
 
 public class NoteBean extends BaseBean{
 
-    private List<SortlistBean> outSortlis;
-    private List<SortlistBean> inSortlis;
-    private List<PayInfoBean> payinfo;
+    private List<KindlistBean> outSortlis;
+    private List<KindlistBean> inSortlis;
+    private List<PaymentInfoBean> payinfo;
 
-    public List<SortlistBean> getOutSortlis() {
+    public List<KindlistBean> getOutSortlis() {
         return outSortlis;
     }
 
-    public void setOutSortlis(List<SortlistBean> outSortlis) {
+    public void setOutSortlis(List<KindlistBean> outSortlis) {
         this.outSortlis = outSortlis;
     }
 
-    public List<SortlistBean> getInSortlis() {
+    public List<KindlistBean> getInSortlis() {
         return inSortlis;
     }
 
-    public void setInSortlis(List<SortlistBean> inSortlis) {
+    public void setInSortlis(List<KindlistBean> inSortlis) {
         this.inSortlis = inSortlis;
     }
 
-    public List<PayInfoBean> getPayinfo() {
+    public List<PaymentInfoBean> getPayinfo() {
         return payinfo;
     }
 
-    public void setPayinfo(List<PayInfoBean> payinfo) {
+    public void setPayinfo(List<PaymentInfoBean> payinfo) {
         this.payinfo = payinfo;
     }
 
-    public static class SortlistBean {
-
+    public static class KindlistBean
+    {
         private int id;
         private int uid;
         private String sortName;
@@ -100,7 +100,7 @@ public class NoteBean extends BaseBean{
         }
     }
 
-    public static class PayInfoBean {
+    public static class PaymentInfoBean {
 
 
         private int id;

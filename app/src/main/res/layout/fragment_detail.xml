@@ -10,7 +10,7 @@
 
   <include
       android:id="@+id/layout_top"
-      layout="@layout/top_date"></include>
+      layout="@layout/top_date_select_parts"></include>
 
   <android.support.v4.widget.SwipeRefreshLayout
       android:layout_below="@+id/layout_top"

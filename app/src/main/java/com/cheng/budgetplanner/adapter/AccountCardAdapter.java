@@ -55,7 +55,7 @@ public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_tally_account, parent, false);
+        View view = mInflater.inflate(R.layout.item_account, parent, false);
         return new ViewHolder(view);
     }
 

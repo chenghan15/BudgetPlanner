@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -58,9 +57,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initEventAndData() {
 
         //obtain the bill note information
-        NoteBean note= new Gson().fromJson(Constants.BILL_NOTE, NoteBean.class);
-        List<NoteBean.SortlistBean> sorts=note.getOutSortlis();
-        sorts.addAll(note.getInSortlis());
+        NoteBean note= new Gson().fromJson(Constants.BILL_KIND_INFO, NoteBean.class);
+        List<NoteBean.KindlistBean> kinds=note.getOutSortlis();
+        kinds.addAll(note.getInSortlis());
         note.getPayinfo();
 
 
@@ -95,24 +94,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //listen navigation
         navigationView.setNavigationItemSelectedListener(this);
 
-    }
-
-
-    /**
-     * Fragment Transaction
-     *
-     * @param index
-     * @return
-     */
-    private FragmentTransaction obtainFragmentTransaction(int index) {
-        FragmentTransaction ft = mFragmentManager.beginTransaction();
-        // shift animations
-        if (index > this.index) {
-            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left);
-        } else {
-            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right);
-        }
-        return ft;
     }
 
     /**
@@ -172,15 +153,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-//        if (id == R.id.nav_setting) {
-//
-//        } else
-            if (id == R.id.nav_about){
+
+        if (id == R.id.nav_about){
             startActivity(new Intent(MainActivity.this,AboutActivity.class));
         }
-//            else if (id == R.id.nav_share) {
-//
-//        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

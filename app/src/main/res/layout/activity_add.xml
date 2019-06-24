@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tb_note_outcome"
+                android:id="@+id/note_outcome"
                 android:text="expense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,9 +48,9 @@
                 android:background="@drawable/tb_outcome_selector"
                 android:textColor="@drawable/tb_text_selector" />
             <TextView
-                android:id="@+id/tb_note_income"
+                android:id="@+id/note_income"
                 android:text="income"
-                android:layout_toRightOf="@+id/tb_note_outcome"
+                android:layout_toRightOf="@+id/note_outcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
@@ -95,16 +95,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="17dp">
         <TextView
-            android:id="@+id/tb_note_money"
+            android:id="@+id/note_money"
             android:text="0.00"
             android:textColor="#000000"
             android:maxLength="11"
-            android:layout_toLeftOf="@+id/tb_note_clear"
+            android:layout_toLeftOf="@+id/note_clear"
             android:textSize="28sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <ImageView
-            android:id="@+id/tb_note_clear"
+            android:id="@+id/note_clear"
             android:layout_alignParentRight="true"
             android:paddingRight="15dp"
             android:paddingLeft="10dp"
@@ -125,7 +125,7 @@
         android:layout_marginRight="15dp"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/tb_note_cash"
+            android:id="@+id/note_cash"
             android:text="Cash"
             android:background="@drawable/shape_tb_cash"
             android:textSize="15sp"
@@ -141,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/tb_note_date"
+            android:id="@+id/note_date"
             android:background="@drawable/shape_tb_cash"
             android:textSize="15sp"
             android:paddingLeft="20dp"
@@ -158,7 +158,7 @@
 
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/tb_note_remark"
+                android:id="@+id/note_remark"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:paddingLeft="10dp"
@@ -190,7 +190,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/tb_calc_num_1"
+                android:id="@+id/num_1"
                 android:text="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -203,7 +203,7 @@
                 style="@style/horizontal_decoration_style"
                 android:background="#8c8c8c"/>
             <TextView
-                android:id="@+id/tb_calc_num_4"
+                android:id="@+id/num_4"
                 android:text="4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -216,7 +216,7 @@
                 style="@style/horizontal_decoration_style"
                 android:background="#8c8c8c"/>
             <TextView
-                android:id="@+id/tb_calc_num_7"
+                android:id="@+id/num_7"
                 android:text="7"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -229,7 +229,7 @@
                 style="@style/horizontal_decoration_style"
                 android:background="#8c8c8c"/>
             <TextView
-                android:id="@+id/tb_calc_num_dot"
+                android:id="@+id/num_dot"
                 android:text="."
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -254,7 +254,7 @@
                 android:layout_weight="1"
                 android:layout_height="0dp">
                 <TextView
-                    android:id="@+id/tb_calc_num_2"
+                    android:id="@+id/num_2"
                     android:text="2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -268,7 +268,7 @@
                     android:background="#8c8c8c"
                     />
                 <TextView
-                    android:id="@+id/tb_calc_num_3"
+                    android:id="@+id/num_3"
                     android:text="3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -287,7 +287,7 @@
                 android:layout_weight="1"
                 android:layout_height="0dp">
                 <TextView
-                    android:id="@+id/tb_calc_num_5"
+                    android:id="@+id/num_5"
                     android:text="5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -301,7 +301,7 @@
                     android:background="#8c8c8c"
                     />
                 <TextView
-                    android:id="@+id/tb_calc_num_6"
+                    android:id="@+id/num_6"
                     android:text="6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -320,7 +320,7 @@
                 android:layout_weight="1"
                 android:layout_height="0dp">
                 <TextView
-                    android:id="@+id/tb_calc_num_8"
+                    android:id="@+id/num_8"
                     android:text="8"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -334,7 +334,7 @@
                     android:background="#8c8c8c"
                     />
                 <TextView
-                    android:id="@+id/tb_calc_num_9"
+                    android:id="@+id/num_9"
                     android:text="9"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -353,7 +353,7 @@
                 android:layout_weight="1"
                 android:layout_height="0dp">
                 <TextView
-                    android:id="@+id/tb_calc_num_0"
+                    android:id="@+id/num_0"
                     android:text="0"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -379,7 +379,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <RelativeLayout
-                android:id="@+id/tb_calc_num_del"
+                android:id="@+id/num_del"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
@@ -391,7 +391,7 @@
                     />
             </RelativeLayout>
             <TextView
-                android:id="@+id/tb_calc_num_done"
+                android:id="@+id/num_done"
                 android:text="Confirm"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

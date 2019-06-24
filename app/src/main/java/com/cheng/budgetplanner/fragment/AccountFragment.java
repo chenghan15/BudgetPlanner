@@ -18,13 +18,11 @@ import com.cheng.budgetplanner.utils.BillUtils;
 import com.cheng.budgetplanner.utils.Constants;
 import com.cheng.budgetplanner.utils.DateUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import com.google.gson.Gson;
 
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
@@ -61,7 +59,7 @@ public class AccountFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_menu_account;
+        return R.layout.fragment_account;
     }
 
 

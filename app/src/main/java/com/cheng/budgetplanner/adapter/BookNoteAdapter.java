@@ -22,15 +22,14 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
     private AddBillActivity mContext;
     private EditBillActivity eContext;
     private LayoutInflater mInflater;
-    private List<NoteBean.SortlistBean> mDatas;
+    private List<NoteBean.KindlistBean> mDatas;
 
-    private String baseUrl = "";
 
-    public void setmDatas(List<NoteBean.SortlistBean> mDatas) {
+    public void setmDatas(List<NoteBean.KindlistBean> mDatas) {
         this.mDatas = mDatas;
     }
 
-    public BookNoteAdapter(AddBillActivity context, List<NoteBean.SortlistBean> datas){
+    public BookNoteAdapter(AddBillActivity context, List<NoteBean.KindlistBean> datas){
         this.mContext = context;
         this.eContext = null;
         this.mInflater = LayoutInflater.from(context);
@@ -38,7 +37,7 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
 
     }
 
-    public BookNoteAdapter(EditBillActivity context, List<NoteBean.SortlistBean> datas){
+    public BookNoteAdapter(EditBillActivity context, List<NoteBean.KindlistBean> datas){
         this.mContext = null;
         this.eContext = context;
         this.mInflater = LayoutInflater.from(context);
@@ -53,7 +52,7 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_tb_type, parent, false);
+        View view = mInflater.inflate(R.layout.item_type_cell, parent, false);
         return new ViewHolder(view);
     }
 
@@ -86,10 +85,7 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
 
                 }else if (!mContext.lastBean.equals(mDatas.get(getAdapterPosition()))){
                     mDatas.get(getAdapterPosition()).setSelected(true);
-//                    String selectUrl = baseUrl.replace("blacksort","checksort");
-//                    Glide.with(mContext).load(selectUrl + mDatas.get(getAdapterPosition()).getSortImg()).into(img);
-//                    mContext.lastBean.setSelected(false);
-//                    Glide.with(mContext).load(baseUrl + mContext.lastBean.getSortImg()).into(mContext.lastImg);
+
                     mContext.lastImg = img;
                     mContext.lastBean = mDatas.get(getAdapterPosition());
                 }
@@ -98,10 +94,7 @@ public class BookNoteAdapter extends RecyclerView.Adapter<BookNoteAdapter.ViewHo
                     Toast.makeText(eContext, "click to add", Toast.LENGTH_SHORT).show();
                 }else if (!eContext.lastBean.equals(mDatas.get(getAdapterPosition()))){
                     mDatas.get(getAdapterPosition()).setSelected(true);
-//                    String selectUrl = baseUrl.replace("blacksort","checksort");
-//                    Glide.with(eContext).load(selectUrl + mDatas.get(getAdapterPosition()).getSortImg()).into(img);
-//                    eContext.lastBean.setSelected(false);
-//                    Glide.with(eContext).load(baseUrl + eContext.lastBean.getSortImg()).into(eContext.lastImg);
+
                     eContext.lastImg = img;
                     eContext.lastBean = mDatas.get(getAdapterPosition());
                 }

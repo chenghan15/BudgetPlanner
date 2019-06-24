@@ -41,17 +41,17 @@ import static com.cheng.budgetplanner.utils.DateUtils.*;
  */
 public class EditBillActivity extends BaseActivity {
 
-    @BindView(R.id.tb_note_income)
+    @BindView(R.id.note_income)
     TextView incomeTv;
-    @BindView(R.id.tb_note_outcome)
+    @BindView(R.id.note_outcome)
     TextView outcomeTv;
-    @BindView(R.id.tb_note_remark)
+    @BindView(R.id.note_remark)
     ImageView remarkTv;
-    @BindView(R.id.tb_note_money)
+    @BindView(R.id.note_money)
     TextView moneyTv;
-    @BindView(R.id.tb_note_date)
+    @BindView(R.id.note_date)
     TextView dateTv;
-    @BindView(R.id.tb_note_cash)
+    @BindView(R.id.note_cash)
     TextView cashTv;
     @BindView(R.id.viewpager_item)
     ViewPager viewpagerItem;
@@ -59,25 +59,29 @@ public class EditBillActivity extends BaseActivity {
     LinearLayout layoutIcon;
 
     public boolean isOutcome = true;
+
     //calculate
-    private boolean isDot;
-    private String num = "0";
+    private boolean hasDot;
+    private String integerPartNum = "0";
     private String dotNum = ".00";
     private final int MAX_NUM = 9999999;
-    private final int DOT_NUM = 2;
-    private int count = 0;
-    //picker
+    private final int DOT_NUM_LENGTH = 2;
+    private int digitsCount = 0;
+
+    //card(account) selection
     private OptionsPickerView pvCustomOptions;
     private List<String> cardItem;
     private int selectedPayinfoIndex = 0;
-    //viewpager
+    
+    //kindlist page
     private int page;
     private boolean isTotalPage;
     private int sortPage = -1;
-    private List<NoteBean.SortlistBean> mDatas;
-    private List<NoteBean.SortlistBean> tempList;
+    private List<NoteBean.KindlistBean> mDatas;
+    private List<NoteBean.KindlistBean> tempList;
 
-    public NoteBean.SortlistBean lastBean;
+    //last selected kind
+    public NoteBean.KindlistBean lastBean;
     public ImageView lastImg;
 
 
@@ -89,15 +93,16 @@ public class EditBillActivity extends BaseActivity {
     private int mDay;
     private String days;
 
+    //comments
     private String remarkInput = "";
     private NoteBean noteBean = null;
 
     //old Bill
-    private Bundle bundle;
+    private Bundle oldBill;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_tallybook_note;
+        return R.layout.activity_add;
     }
 
     @Override
@@ -107,7 +112,7 @@ public class EditBillActivity extends BaseActivity {
 
 
         Gson gson = new Gson();
-        noteBean = gson.fromJson(Constants.BILL_NOTE, NoteBean.class);
+        noteBean = gson.fromJson(Constants.BILL_KIND_INFO, NoteBean.class);
         setTitleStatus();
 
 
@@ -123,34 +128,34 @@ public class EditBillActivity extends BaseActivity {
      */
     private void setOldBill() {
 
-        bundle = getIntent().getBundleExtra("bundle");
-        if (bundle==null)
+        oldBill = getIntent().getBundleExtra("oldBill");
+        if (oldBill ==null)
             return;
 
-        days=DateUtils.long2Str(bundle.getLong("date"),FORMAT_YMD);
+        days=DateUtils.long2Str(oldBill.getLong("date"),FORMAT_YMD);
         dateTv.setText(days);
-        isOutcome=!bundle.getBoolean("income");
-        remarkInput=bundle.getString("content");
+        isOutcome=!oldBill.getBoolean("income");
+        remarkInput= oldBill.getString("content");
         DecimalFormat df= new DecimalFormat("######0.00");
-        String money= df.format(bundle.getDouble("cost"));
+        String money= df.format(oldBill.getDouble("cost"));
 
-        num=money.split("\\.")[0];
+        integerPartNum =money.split("\\.")[0];
 
         dotNum="."+money.split("\\.")[1];
 
 
-        moneyTv.setText(num + dotNum);
+        moneyTv.setText(integerPartNum + dotNum);
     }
 
 
-    private NoteBean.SortlistBean findSortById(int id){
+    private NoteBean.KindlistBean findSortById(int id){
         if (isOutcome){
-            for (NoteBean.SortlistBean e:noteBean.getOutSortlis()) {
+            for (NoteBean.KindlistBean e:noteBean.getOutSortlis()) {
                 if (e.getId()==id)
                     return e;
             }
         }else {
-            for (NoteBean.SortlistBean e:noteBean.getInSortlis()) {
+            for (NoteBean.KindlistBean e:noteBean.getInSortlis()) {
                 if (e.getId()==id)
                     return e;
             }
@@ -158,7 +163,7 @@ public class EditBillActivity extends BaseActivity {
         return null;
     }
     private int findPayById(int id){
-        List<NoteBean.PayInfoBean> list=noteBean.getPayinfo();
+        List<NoteBean.PaymentInfoBean> list=noteBean.getPayinfo();
         for (int i=0;i<list.size();i++){
             if(list.get(i).getId()==id)
                 return i;
@@ -181,7 +186,7 @@ public class EditBillActivity extends BaseActivity {
             mDatas = noteBean.getInSortlis();
         }
 
-        lastBean = findSortById(bundle.getInt("sortId"));
+        lastBean = findSortById(oldBill.getInt("sortId"));
         lastImg = new ImageView(this);
 
         cardItem = new ArrayList<>();
@@ -190,7 +195,7 @@ public class EditBillActivity extends BaseActivity {
             cardItem.add(itemStr);
         }
 
-        selectedPayinfoIndex=findPayById(bundle.getInt("payId"));
+        selectedPayinfoIndex=findPayById(oldBill.getInt("payId"));
         cashTv.setText(cardItem.get(selectedPayinfoIndex));
 
         initViewPager();
@@ -204,7 +209,7 @@ public class EditBillActivity extends BaseActivity {
         page = (int) Math.ceil(mDatas.size() * 1.0 / 10);
         for (int i = 0; i < page; i++) {
             tempList = new ArrayList<>();
-            View view = inflater.inflate(R.layout.pager_item_tb_type, null);
+            View view = inflater.inflate(R.layout.pager_item_type_cell, null);
             RecyclerView recycle = (RecyclerView) view.findViewById(R.id.pager_type_recycle);
             if (i != page - 1 || (i == page - 1 && isTotalPage)) {
                 for (int j = 0; j < 10; j++) {
@@ -279,25 +284,25 @@ public class EditBillActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @OnClick({R.id.tb_note_income, R.id.tb_note_outcome, R.id.tb_note_cash, R.id.tb_note_date,
-            R.id.tb_note_remark, R.id.tb_calc_num_done, R.id.tb_calc_num_del, R.id.tb_calc_num_1,
-            R.id.tb_calc_num_2, R.id.tb_calc_num_3, R.id.tb_calc_num_4, R.id.tb_calc_num_5,
-            R.id.tb_calc_num_6, R.id.tb_calc_num_7, R.id.tb_calc_num_8, R.id.tb_calc_num_9,
-            R.id.tb_calc_num_0, R.id.tb_calc_num_dot, R.id.tb_note_clear, R.id.back_btn})
+    @OnClick({R.id.note_income, R.id.note_outcome, R.id.note_cash, R.id.note_date,
+            R.id.note_remark, R.id.num_done, R.id.num_del, R.id.num_1,
+            R.id.num_2, R.id.num_3, R.id.num_4, R.id.num_5,
+            R.id.num_6, R.id.num_7, R.id.num_8, R.id.num_9,
+            R.id.num_0, R.id.num_dot, R.id.note_clear, R.id.back_btn})
     protected void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_btn:
                 finish();
                 break;
-            case R.id.tb_note_income://income
+            case R.id.note_income://income
 //                isOutcome = false;
 //                setTitleStatus();
                 break;
-            case R.id.tb_note_outcome://expense
+            case R.id.note_outcome://expense
 //                isOutcome = true;
 //                setTitleStatus();
                 break;
-            case R.id.tb_note_cash://cash
+            case R.id.note_cash://cash
                 pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int option2, int options3, View v) {
@@ -309,7 +314,7 @@ public class EditBillActivity extends BaseActivity {
                 pvCustomOptions.setPicker(cardItem);
                 pvCustomOptions.show();
                 break;
-            case R.id.tb_note_date://date
+            case R.id.note_date://date
 
                 new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -340,7 +345,7 @@ public class EditBillActivity extends BaseActivity {
                     }
                 }, mYear, mMonth, mDay).show();
                 break;
-            case R.id.tb_note_remark://comments
+            case R.id.note_remark://comments
 
                 final EditText editText = new EditText(EditBillActivity.this);
 
@@ -374,15 +379,15 @@ public class EditBillActivity extends BaseActivity {
                     }
                 });
                 break;
-            case R.id.tb_calc_num_done://confirm
+            case R.id.num_done://confirm
                 final SimpleDateFormat sdf = new SimpleDateFormat(" HH:mm:ss");
                 final String crDate = days + sdf.format(new Date());
-                if ((num + dotNum).equals("0.00")) {
+                if ((integerPartNum + dotNum).equals("0.00")) {
                     Toast.makeText(this, "Please enter the money", Toast.LENGTH_SHORT).show();
                     break;
                 }
 
-                LocalDB.getInstance().getDBOperation().updateBill(bundle.getLong("_id"), Float.valueOf(num + dotNum), remarkInput, Constants.currentUserId, lastBean.getId(), lastBean.getSortName(), lastBean.getSortImg(), noteBean.getPayinfo().get(selectedPayinfoIndex).getId(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(), DateUtils.getMillis(crDate), !isOutcome);
+                LocalDB.getInstance().getDBOperation().updateBill(oldBill.getLong("_id"), Float.valueOf(integerPartNum + dotNum), remarkInput, Constants.currentUserId, lastBean.getId(), lastBean.getSortName(), lastBean.getSortImg(), noteBean.getPayinfo().get(selectedPayinfoIndex).getId(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayName(), noteBean.getPayinfo().get(selectedPayinfoIndex).getPayImg(), DateUtils.getMillis(crDate), !isOutcome);
 
                 Intent intent = new Intent();
 //                intent.putExtra("billJsonStr", "ok");
@@ -390,87 +395,87 @@ public class EditBillActivity extends BaseActivity {
                 finish();
 
                 break;
-            case R.id.tb_calc_num_1:
-                calcMoney(1);
+            case R.id.num_1:
+                calculateMoney(1);
                 break;
-            case R.id.tb_calc_num_2:
-                calcMoney(2);
+            case R.id.num_2:
+                calculateMoney(2);
                 break;
-            case R.id.tb_calc_num_3:
-                calcMoney(3);
+            case R.id.num_3:
+                calculateMoney(3);
                 break;
-            case R.id.tb_calc_num_4:
-                calcMoney(4);
+            case R.id.num_4:
+                calculateMoney(4);
                 break;
-            case R.id.tb_calc_num_5:
-                calcMoney(5);
+            case R.id.num_5:
+                calculateMoney(5);
                 break;
-            case R.id.tb_calc_num_6:
-                calcMoney(6);
+            case R.id.num_6:
+                calculateMoney(6);
                 break;
-            case R.id.tb_calc_num_7:
-                calcMoney(7);
+            case R.id.num_7:
+                calculateMoney(7);
                 break;
-            case R.id.tb_calc_num_8:
-                calcMoney(8);
+            case R.id.num_8:
+                calculateMoney(8);
                 break;
-            case R.id.tb_calc_num_9:
-                calcMoney(9);
+            case R.id.num_9:
+                calculateMoney(9);
                 break;
-            case R.id.tb_calc_num_0:
-                calcMoney(0);
+            case R.id.num_0:
+                calculateMoney(0);
                 break;
-            case R.id.tb_calc_num_dot:
+            case R.id.num_dot:
                 if (dotNum.equals(".00")) {
-                    isDot = true;
+                    hasDot = true;
                     dotNum = ".";
                 }
-                moneyTv.setText(num + dotNum);
+                moneyTv.setText(integerPartNum + dotNum);
                 break;
-            case R.id.tb_note_clear://clear
-                num = "0";
-                count = 0;
+            case R.id.note_clear://clear
+                integerPartNum = "0";
+                digitsCount = 0;
                 dotNum = ".00";
-                isDot = false;
+                hasDot = false;
                 moneyTv.setText("0.00");
                 break;
-            case R.id.tb_calc_num_del://delete
-                if (isDot) {
-                    if (count > 0) {
+            case R.id.num_del://delete
+                if (hasDot) {
+                    if (digitsCount > 0) {
                         dotNum = dotNum.substring(0, dotNum.length() - 1);
-                        count--;
+                        digitsCount--;
                     }
-                    if (count == 0) {
-                        isDot = false;
+                    if (digitsCount == 0) {
+                        hasDot = false;
                         dotNum = ".00";
                     }
-                    moneyTv.setText(num + dotNum);
+                    moneyTv.setText(integerPartNum + dotNum);
                 } else {
-                    if (num.length() > 0)
-                        num = num.substring(0, num.length() - 1);
-                    if (num.length() == 0)
-                        num = "0";
-                    moneyTv.setText(num + dotNum);
+                    if (integerPartNum.length() > 0)
+                        integerPartNum = integerPartNum.substring(0, integerPartNum.length() - 1);
+                    if (integerPartNum.length() == 0)
+                        integerPartNum = "0";
+                    moneyTv.setText(integerPartNum + dotNum);
                 }
                 break;
         }
     }
 
     //calculate money
-    private void calcMoney(int money) {
-        if (num.equals("0") && money == 0)
+    private void calculateMoney(int money) {
+        if (integerPartNum.equals("0") && money == 0)
             return;
-        if (isDot) {
-            if (count < DOT_NUM) {
-                count++;
+        if (hasDot) {
+            if (digitsCount < DOT_NUM_LENGTH) {
+                digitsCount++;
                 dotNum += money;
-                moneyTv.setText(num + dotNum);
+                moneyTv.setText(integerPartNum + dotNum);
             }
-        } else if (Integer.parseInt(num) < MAX_NUM) {
-            if (num.equals("0"))
-                num = "";
-            num += money;
-            moneyTv.setText(num + dotNum);
+        } else if (Integer.parseInt(integerPartNum) < MAX_NUM) {
+            if (integerPartNum.equals("0"))
+                integerPartNum = "";
+            integerPartNum += money;
+            moneyTv.setText(integerPartNum + dotNum);
         }
     }
 

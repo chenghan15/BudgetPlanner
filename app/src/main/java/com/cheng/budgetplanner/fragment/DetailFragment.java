@@ -22,14 +22,12 @@ import com.cheng.budgetplanner.utils.BillUtils;
 import com.cheng.budgetplanner.utils.Constants;
 import com.cheng.budgetplanner.utils.DateUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.google.gson.Gson;
 
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_M;
 import static com.cheng.budgetplanner.utils.DateUtils.FORMAT_Y;
@@ -69,7 +67,7 @@ public class DetailFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_menu_detail;
+        return R.layout.fragment_detail;
     }
 
 
@@ -157,7 +155,7 @@ public class DetailFragment extends BaseFragment {
         tOutcome.setText(data.getT_outcome());
         tIncome.setText(data.getT_income());
         list = data.getDaylist();
-        adapter.setmDatas(list);
+        adapter.setMonthData(list);
         adapter.notifyAllSectionsDataSetChanged();//notify changes
     }
 
