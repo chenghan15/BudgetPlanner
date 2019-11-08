@@ -128,7 +128,7 @@ public class EditBillActivity extends BaseActivity {
      */
     private void setOldBill() {
 
-        oldBill = getIntent().getBundleExtra("oldBill");
+        oldBill = getIntent().getBundleExtra("bundle");
         if (oldBill ==null)
             return;
 
